@@ -1,0 +1,15 @@
+[
+  {
+    "instance_id": 0,
+    "solution": {
+      "suspect": "Scarlet",
+      "weapon": "Rope",
+      "room": "Kitchen"
+    },
+    "hands": {
+      "P0": ["Knife", "Library"],
+      "P1": ["Mustard", "Hall"],
+      "P2": ["Candlestick", "Plum"]
+    }
+  }
+]

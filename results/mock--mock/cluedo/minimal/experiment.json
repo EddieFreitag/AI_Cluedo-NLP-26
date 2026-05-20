@@ -1,0 +1,27 @@
+{
+  "name": "minimal",
+  "timestamp": "2026-05-20T14:57:28.183553",
+  "game_name": "cluedo",
+  "player_models": {
+    "0": {
+      "model_spec": {
+        "model_name": "mock",
+        "backend": "_player_programmed"
+      },
+      "gen_args": {
+        "temperature": 0.0,
+        "max_tokens": 300
+      }
+    },
+    "1": {
+      "model_spec": {
+        "model_name": "mock",
+        "backend": "_player_programmed"
+      },
+      "gen_args": {
+        "temperature": 0.0,
+        "max_tokens": 300
+      }
+    }
+  }
+}

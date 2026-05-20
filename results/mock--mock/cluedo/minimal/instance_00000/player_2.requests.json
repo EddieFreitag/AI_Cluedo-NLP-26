@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "game_name": "cluedo",
+    "experiment_name": "minimal",
+    "game_id": 0,
+    "player_name": "Player 2",
+    "game_role": "CluedoPlayer",
+    "model_name": "mock",
+    "round_count": 2,
+    "completed": true
+  },
+  "calls": [
+    {
+      "round": 0,
+      "call": {
+        "timestamp": "2026-05-20T15:49:10.379372",
+        "manipulated_prompt_obj": {
+          "role": "user",
+          "content": "test"
+        },
+        "raw_response_obj": {
+          "clem_player": {
+            "response": "SUGGEST: Scarlet, Rope, Kitchen (t=1)",
+            "model_name": "mock"
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "call": {
+        "timestamp": "2026-05-20T15:49:10.379426",
+        "manipulated_prompt_obj": {
+          "role": "user",
+          "content": "test"
+        },
+        "raw_response_obj": {
+          "clem_player": {
+            "response": "SUGGEST: Scarlet, Rope, Kitchen (t=2)",
+            "model_name": "mock"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "meta": {
     "game_name": "cluedo",
     "experiment_name": "minimal",
-    "game_id": 0,
+    "game_id": 2,
     "results_folder": "mock--mock",
     "clem_version": "3.7.2",
     "round_count": 3,
@@ -49,7 +49,7 @@
       {
         "from": "GM",
         "to": "Player 1",
-        "timestamp": "2026-05-27T14:09:53.380388",
+        "timestamp": "2026-05-27T14:09:53.381986",
         "action": {
           "type": "send message",
           "content": "You are playing Cluedo.\nOn your turn, make a suggestion.\nFormat exactly:\nSUGGEST: suspect, weapon, room",
@@ -59,7 +59,7 @@
       {
         "from": "Player 1",
         "to": "GM",
-        "timestamp": "2026-05-27T14:09:53.380394",
+        "timestamp": "2026-05-27T14:09:53.381989",
         "action": {
           "type": "get message",
           "content": "SUGGEST: Scarlet, Rope, Kitchen (t=1)",
@@ -69,7 +69,7 @@
       {
         "from": "GM",
         "to": "Player 2",
-        "timestamp": "2026-05-27T14:09:53.380433",
+        "timestamp": "2026-05-27T14:09:53.382009",
         "action": {
           "type": "send message",
           "content": "You are playing Cluedo.\nOn your turn, make a suggestion.\nFormat exactly:\nSUGGEST: suspect, weapon, room",
@@ -79,7 +79,7 @@
       {
         "from": "Player 2",
         "to": "GM",
-        "timestamp": "2026-05-27T14:09:53.380437",
+        "timestamp": "2026-05-27T14:09:53.382012",
         "action": {
           "type": "get message",
           "content": "SUGGEST: Scarlet, Rope, Kitchen (t=1)",
@@ -91,7 +91,7 @@
       {
         "from": "GM",
         "to": "Player 1",
-        "timestamp": "2026-05-27T14:09:53.380464",
+        "timestamp": "2026-05-27T14:09:53.382029",
         "action": {
           "type": "send message",
           "content": "You are playing Cluedo.\nOn your turn, make a suggestion.\nFormat exactly:\nSUGGEST: suspect, weapon, room",
@@ -101,7 +101,7 @@
       {
         "from": "Player 1",
         "to": "GM",
-        "timestamp": "2026-05-27T14:09:53.380468",
+        "timestamp": "2026-05-27T14:09:53.382033",
         "action": {
           "type": "get message",
           "content": "SUGGEST: Scarlet, Rope, Kitchen (t=2)",
@@ -111,7 +111,7 @@
       {
         "from": "GM",
         "to": "Player 2",
-        "timestamp": "2026-05-27T14:09:53.380487",
+        "timestamp": "2026-05-27T14:09:53.382049",
         "action": {
           "type": "send message",
           "content": "You are playing Cluedo.\nOn your turn, make a suggestion.\nFormat exactly:\nSUGGEST: suspect, weapon, room",
@@ -121,7 +121,7 @@
       {
         "from": "Player 2",
         "to": "GM",
-        "timestamp": "2026-05-27T14:09:53.380490",
+        "timestamp": "2026-05-27T14:09:53.382053",
         "action": {
           "type": "get message",
           "content": "SUGGEST: Scarlet, Rope, Kitchen (t=2)",
@@ -133,7 +133,7 @@
       {
         "from": "GM",
         "to": "Player 1",
-        "timestamp": "2026-05-27T14:09:53.380509",
+        "timestamp": "2026-05-27T14:09:53.382069",
         "action": {
           "type": "send message",
           "content": "You are playing Cluedo.\nOn your turn, make a suggestion.\nFormat exactly:\nSUGGEST: suspect, weapon, room",
@@ -143,7 +143,7 @@
       {
         "from": "Player 1",
         "to": "GM",
-        "timestamp": "2026-05-27T14:09:53.380512",
+        "timestamp": "2026-05-27T14:09:53.382073",
         "action": {
           "type": "get message",
           "content": "SUGGEST: Scarlet, Rope, Kitchen (t=3)",
@@ -153,7 +153,7 @@
       {
         "from": "GM",
         "to": "Player 2",
-        "timestamp": "2026-05-27T14:09:53.380529",
+        "timestamp": "2026-05-27T14:09:53.382088",
         "action": {
           "type": "send message",
           "content": "You are playing Cluedo.\nOn your turn, make a suggestion.\nFormat exactly:\nSUGGEST: suspect, weapon, room",
@@ -163,7 +163,7 @@
       {
         "from": "Player 2",
         "to": "GM",
-        "timestamp": "2026-05-27T14:09:53.380532",
+        "timestamp": "2026-05-27T14:09:53.382092",
         "action": {
           "type": "get message",
           "content": "SUGGEST: Scarlet, Rope, Kitchen (t=3)",

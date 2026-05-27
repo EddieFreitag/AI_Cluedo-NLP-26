@@ -1,0 +1,5 @@
+{
+  "timestamp": "2026-05-27T14:47:43.031434",
+  "error": "TypeError",
+  "message": "LlamaServerModel.__init__() missing 1 required positional argument: 'port'"
+}

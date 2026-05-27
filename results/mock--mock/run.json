@@ -26,11 +26,11 @@
   "games": {
     "cluedo": {
       "game_path": "/home/efreitag/uni/nlp/AI_Cluedo-NLP-26/cluedo",
-      "benchmark_start": "2026-05-20T15:49:10.377897",
-      "benchmark_end": "2026-05-20T15:49:10.379795",
-      "duration": "0:00:00.001898",
-      "duration_seconds": 0.001898,
-      "num_instances": 1
+      "benchmark_start": "2026-05-27T14:47:43.029740",
+      "benchmark_end": "2026-05-27T14:47:43.031687",
+      "duration": "0:00:00.001947",
+      "duration_seconds": 0.001947,
+      "num_instances": 0
     }
   }
 }

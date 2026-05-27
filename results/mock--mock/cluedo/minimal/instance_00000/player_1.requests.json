@@ -6,17 +6,17 @@
     "player_name": "Player 1",
     "game_role": "CluedoPlayer",
     "model_name": "mock",
-    "round_count": 2,
+    "round_count": 3,
     "completed": true
   },
   "calls": [
     {
       "round": 0,
       "call": {
-        "timestamp": "2026-05-20T15:49:10.379322",
+        "timestamp": "2026-05-27T14:09:53.380375",
         "manipulated_prompt_obj": {
           "role": "user",
-          "content": "test"
+          "content": "You are playing Cluedo.\nOn your turn, make a suggestion.\nFormat exactly:\nSUGGEST: suspect, weapon, room"
         },
         "raw_response_obj": {
           "clem_player": {
@@ -29,14 +29,30 @@
     {
       "round": 1,
       "call": {
-        "timestamp": "2026-05-20T15:49:10.379403",
+        "timestamp": "2026-05-27T14:09:53.380459",
         "manipulated_prompt_obj": {
           "role": "user",
-          "content": "test"
+          "content": "You are playing Cluedo.\nOn your turn, make a suggestion.\nFormat exactly:\nSUGGEST: suspect, weapon, room"
         },
         "raw_response_obj": {
           "clem_player": {
             "response": "SUGGEST: Scarlet, Rope, Kitchen (t=2)",
+            "model_name": "mock"
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "call": {
+        "timestamp": "2026-05-27T14:09:53.380504",
+        "manipulated_prompt_obj": {
+          "role": "user",
+          "content": "You are playing Cluedo.\nOn your turn, make a suggestion.\nFormat exactly:\nSUGGEST: suspect, weapon, room"
+        },
+        "raw_response_obj": {
+          "clem_player": {
+            "response": "SUGGEST: Scarlet, Rope, Kitchen (t=3)",
             "model_name": "mock"
           }
         }

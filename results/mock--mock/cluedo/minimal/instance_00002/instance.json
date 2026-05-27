@@ -1,30 +1,30 @@
 {
-  "game_id": 0,
+  "game_id": 2,
   "solution": {
-    "suspect": "Plum",
-    "weapon": "Rope",
-    "room": "Kitchen"
+    "suspect": "Scarlet",
+    "weapon": "Candlestick",
+    "room": "Lounge"
   },
   "player_hands": {
     "player_1": [
-      "Lounge",
-      "Library",
-      "Peacock",
       "Wrench",
-      "Knife",
-      "Hall",
-      "Scarlet",
-      "Candlestick"
+      "Mustard",
+      "Peacock",
+      "Green",
+      "Dining Room",
+      "Rope",
+      "Kitchen",
+      "Plum"
     ],
     "player_2": [
-      "Dining Room",
-      "Study",
-      "Ballroom",
-      "Mustard",
       "Conservatory",
-      "White",
-      "Green",
+      "Library",
+      "Knife",
+      "Hall",
+      "Study",
       "Revolver",
+      "Ballroom",
+      "White",
       "Lead Pipe"
     ]
   },

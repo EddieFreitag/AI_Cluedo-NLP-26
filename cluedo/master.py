@@ -10,7 +10,7 @@ from clemcore.clemgame import GameBenchmark, DialogueGameMaster, Player
 
 class CluedoPlayer(Player):
 
-    def __init__(self, model, name):
+    def __init__(self, model: Model, name: str):
         super().__init__(model)
         self.name = name
         self.counter = 0
@@ -29,23 +29,33 @@ class CluedoPlayer(Player):
 class Cluedo(DialogueGameMaster):
 
     def _on_setup(self, **game_instance):
+
         self.turn = 0
-        self.max_turns = 4
+        self.max_turns = self.experiment["max_turns"]
+        self.solution = game_instance["solution"]
+        self.game_over = False
 
         self.p1 = CluedoPlayer(self.player_models[0], "player_1")
         self.p2 = CluedoPlayer(self.player_models[1], "player_2")
 
+        intro_prompt = self.experiment["initial_prompt"]
 
-        self.add_player(self.p1, initial_context="test")
-        self.add_player(self.p2, initial_context="test")
+        self.add_player(
+            self.p1,
+            initial_context=intro_prompt
+        )
+        self.add_player(
+            self.p2,
+            initial_context=intro_prompt
+        )
 
 
     def _does_game_proceed(self):
-        return self.turn < self.max_turns
+        return self.turn < self.max_turns and not self.game_over
 
     def _validate_player_response(self, player, utterance):
-        return utterance.startswith("SUGGEST:")
-
+        return isinstance(utterance, str) and utterance.startswith("SUGGEST:")
+    
     def _on_parse_response(self, player, utterance):
         return utterance.replace("SUGGEST:", "").strip(), False
 
@@ -54,6 +64,8 @@ class Cluedo(DialogueGameMaster):
     
     def _advance_game(self, player, parsed_response):
         self.turn += 1
+        if self.turn >= self.max_turns:
+            self.game_over = True
 
     def _parse_response(self, player, response):
         return super()._parse_response(player, response)

@@ -1,0 +1,12 @@
+[
+  {
+    "model_name": "tinyllama",
+    "backend": "openai_compatible",
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+  },
+  {
+    "model_name": "qwen",
+    "backend": "openai_compatible",
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct"
+  }
+]

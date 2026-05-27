@@ -2,11 +2,10 @@
 
 import os
 import random
-
-from clemcore.clemgame import GameInstanceGenerator
-
+import json
 
 SEED = 42
+INST_PATH = "instances/"
 
 SUSPECTS = [
     "Scarlet",
@@ -38,81 +37,57 @@ ROOMS = [
 ]
 
 
-class CluedoGameInstanceGenerator(GameInstanceGenerator):
-
-    def __init__(self):
-        super().__init__(os.path.dirname(__file__))
-
-    def on_generate(self, seed: int, **kwargs):
-
+class CluedoInstanceGenerator:
+    def __init__(self, seed=SEED, n_players=3, max_turns=10, n_instances=10):
+        self.seed = seed
+        self.n_players = n_players
+        self.max_turns = max_turns
+        self.n_instances = n_instances
         random.seed(seed)
 
-        # Create one experiment
-        experiment = self.add_experiment("minimal")
+    def generate_instance(self):
+        suspect = random.choice(SUSPECTS)
+        weapon = random.choice(WEAPONS)
+        room = random.choice(ROOMS)
+        solution = {
+                "suspect": suspect,
+                "weapon": weapon,
+                "room": room
+        }
 
-        experiment["max_turns"] = 6
+        all_cards = SUSPECTS + WEAPONS + ROOMS
+        all_cards.remove(suspect)
+        all_cards.remove(weapon)
+        all_cards.remove(room)
+        random.shuffle(all_cards)
+        player_cards = {}
+        for i in range(self.n_players):
+            player_cards[f"Player {i + 1}"] = all_cards[i * (len(all_cards) // self.n_players):(i + 1) * (len(all_cards) // self.n_players)]
 
-        experiment["initial_prompt"] = (
-            "You are playing Cluedo.\n"
-            "On your turn, make a suggestion.\n"
-            "Format exactly:\n"
-            "SUGGEST: suspect, weapon, room"
-        )
+        return solution, player_cards
 
-        # Create some game instances
-        for instance_id in range(3):
-
-            suspects = SUSPECTS.copy()
-            weapons = WEAPONS.copy()
-            rooms = ROOMS.copy()
-
-            # Select secret solution
-            solution = {
-                "suspect": random.choice(suspects),
-                "weapon": random.choice(weapons),
-                "room": random.choice(rooms),
+    def save_experiment(self, instances, filename="instances.json"):
+        with open(os.path.join(INST_PATH, filename), "w") as f:
+            experiment = {
+                "seed": self.seed,
+                "n_players": self.n_players,
+                "max_turns": self.max_turns,
+                "instances": instances
             }
+            json.dump(experiment, f, indent=4)
 
-            # Remove solution cards
-            remaining_cards = []
-
-            for s in suspects:
-                if s != solution["suspect"]:
-                    remaining_cards.append(s)
-
-            for w in weapons:
-                if w != solution["weapon"]:
-                    remaining_cards.append(w)
-
-            for r in rooms:
-                if r != solution["room"]:
-                    remaining_cards.append(r)
-
-            random.shuffle(remaining_cards)
-
-            # Split cards between 2 players
-            midpoint = len(remaining_cards) // 2
-
-            player1_hand = remaining_cards[:midpoint]
-            player2_hand = remaining_cards[midpoint:]
-
-            # Create instance
-            game_instance = self.add_game_instance(
-                experiment,
-                instance_id
-            )
-
-            game_instance["solution"] = solution
-
-            game_instance["player_hands"] = {
-                "player_1": player1_hand,
-                "player_2": player2_hand,
+    def generate_experiment(self):
+        instances = []
+        for i in range(self.n_instances):
+            solution, player_cards = self.generate_instance()
+            instance = {
+                "solution": solution,
+                "player_cards": player_cards
             }
-
-            game_instance["suspects"] = suspects
-            game_instance["weapons"] = weapons
-            game_instance["rooms"] = rooms
-
+            instances.append(instance)
+        # save instances to json file
+        self.save_experiment(instances)
 
 if __name__ == "__main__":
-    CluedoGameInstanceGenerator().generate(seed=SEED)
+    generator = CluedoInstanceGenerator()
+    generator.generate_experiment()

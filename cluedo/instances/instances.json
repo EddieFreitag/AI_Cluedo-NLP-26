@@ -1,0 +1,307 @@
+{
+    "seed": 42,
+    "n_players": 3,
+    "max_turns": 10,
+    "instances": [
+        {
+            "solution": {
+                "suspect": "Plum",
+                "weapon": "Rope",
+                "room": "Kitchen"
+            },
+            "player_cards": {
+                "Player 1": [
+                    "Lounge",
+                    "Library",
+                    "Peacock",
+                    "Wrench",
+                    "Knife"
+                ],
+                "Player 2": [
+                    "Hall",
+                    "Scarlet",
+                    "Candlestick",
+                    "Dining Room",
+                    "Study"
+                ],
+                "Player 3": [
+                    "Ballroom",
+                    "Mustard",
+                    "Conservatory",
+                    "White",
+                    "Green"
+                ]
+            }
+        },
+        {
+            "solution": {
+                "suspect": "Peacock",
+                "weapon": "Knife",
+                "room": "Hall"
+            },
+            "player_cards": {
+                "Player 1": [
+                    "Study",
+                    "Lead Pipe",
+                    "Green",
+                    "Ballroom",
+                    "Kitchen"
+                ],
+                "Player 2": [
+                    "Lounge",
+                    "Mustard",
+                    "Dining Room",
+                    "Rope",
+                    "Candlestick"
+                ],
+                "Player 3": [
+                    "White",
+                    "Scarlet",
+                    "Conservatory",
+                    "Plum",
+                    "Wrench"
+                ]
+            }
+        },
+        {
+            "solution": {
+                "suspect": "Scarlet",
+                "weapon": "Candlestick",
+                "room": "Lounge"
+            },
+            "player_cards": {
+                "Player 1": [
+                    "Wrench",
+                    "Mustard",
+                    "Peacock",
+                    "Green",
+                    "Dining Room"
+                ],
+                "Player 2": [
+                    "Rope",
+                    "Kitchen",
+                    "Plum",
+                    "Conservatory",
+                    "Library"
+                ],
+                "Player 3": [
+                    "Knife",
+                    "Hall",
+                    "Study",
+                    "Revolver",
+                    "Ballroom"
+                ]
+            }
+        },
+        {
+            "solution": {
+                "suspect": "Plum",
+                "weapon": "Rope",
+                "room": "Kitchen"
+            },
+            "player_cards": {
+                "Player 1": [
+                    "Scarlet",
+                    "Dining Room",
+                    "Hall",
+                    "Ballroom",
+                    "Lead Pipe"
+                ],
+                "Player 2": [
+                    "White",
+                    "Conservatory",
+                    "Knife",
+                    "Study",
+                    "Peacock"
+                ],
+                "Player 3": [
+                    "Candlestick",
+                    "Lounge",
+                    "Green",
+                    "Library",
+                    "Mustard"
+                ]
+            }
+        },
+        {
+            "solution": {
+                "suspect": "Plum",
+                "weapon": "Wrench",
+                "room": "Ballroom"
+            },
+            "player_cards": {
+                "Player 1": [
+                    "Lead Pipe",
+                    "Lounge",
+                    "Conservatory",
+                    "Library",
+                    "Mustard"
+                ],
+                "Player 2": [
+                    "Scarlet",
+                    "Dining Room",
+                    "Study",
+                    "Green",
+                    "Revolver"
+                ],
+                "Player 3": [
+                    "Kitchen",
+                    "Peacock",
+                    "Knife",
+                    "Hall",
+                    "White"
+                ]
+            }
+        },
+        {
+            "solution": {
+                "suspect": "White",
+                "weapon": "Rope",
+                "room": "Dining Room"
+            },
+            "player_cards": {
+                "Player 1": [
+                    "Scarlet",
+                    "Conservatory",
+                    "Peacock",
+                    "Ballroom",
+                    "Lead Pipe"
+                ],
+                "Player 2": [
+                    "Knife",
+                    "Mustard",
+                    "Wrench",
+                    "Plum",
+                    "Green"
+                ],
+                "Player 3": [
+                    "Library",
+                    "Lounge",
+                    "Hall",
+                    "Revolver",
+                    "Study"
+                ]
+            }
+        },
+        {
+            "solution": {
+                "suspect": "Peacock",
+                "weapon": "Revolver",
+                "room": "Lounge"
+            },
+            "player_cards": {
+                "Player 1": [
+                    "Rope",
+                    "Kitchen",
+                    "Library",
+                    "Dining Room",
+                    "Green"
+                ],
+                "Player 2": [
+                    "Ballroom",
+                    "Hall",
+                    "Knife",
+                    "Wrench",
+                    "White"
+                ],
+                "Player 3": [
+                    "Conservatory",
+                    "Scarlet",
+                    "Mustard",
+                    "Study",
+                    "Lead Pipe"
+                ]
+            }
+        },
+        {
+            "solution": {
+                "suspect": "Peacock",
+                "weapon": "Candlestick",
+                "room": "Kitchen"
+            },
+            "player_cards": {
+                "Player 1": [
+                    "Study",
+                    "Wrench",
+                    "Library",
+                    "Conservatory",
+                    "Hall"
+                ],
+                "Player 2": [
+                    "Lounge",
+                    "Scarlet",
+                    "Revolver",
+                    "White",
+                    "Knife"
+                ],
+                "Player 3": [
+                    "Plum",
+                    "Mustard",
+                    "Rope",
+                    "Ballroom",
+                    "Dining Room"
+                ]
+            }
+        },
+        {
+            "solution": {
+                "suspect": "Plum",
+                "weapon": "Candlestick",
+                "room": "Dining Room"
+            },
+            "player_cards": {
+                "Player 1": [
+                    "Mustard",
+                    "Green",
+                    "Hall",
+                    "Study",
+                    "Library"
+                ],
+                "Player 2": [
+                    "Knife",
+                    "Kitchen",
+                    "Revolver",
+                    "Rope",
+                    "Wrench"
+                ],
+                "Player 3": [
+                    "Scarlet",
+                    "Lounge",
+                    "Lead Pipe",
+                    "White",
+                    "Conservatory"
+                ]
+            }
+        },
+        {
+            "solution": {
+                "suspect": "Mustard",
+                "weapon": "Lead Pipe",
+                "room": "Ballroom"
+            },
+            "player_cards": {
+                "Player 1": [
+                    "Lounge",
+                    "Knife",
+                    "Scarlet",
+                    "Peacock",
+                    "Rope"
+                ],
+                "Player 2": [
+                    "Plum",
+                    "Conservatory",
+                    "Wrench",
+                    "Candlestick",
+                    "Kitchen"
+                ],
+                "Player 3": [
+                    "Study",
+                    "Revolver",
+                    "Dining Room",
+                    "White",
+                    "Library"
+                ]
+            }
+        }
+    ]
+}

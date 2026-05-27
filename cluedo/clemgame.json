@@ -1,7 +1,0 @@
-{
-  "game_name": "cluedo",
-  "description": "Minimal Cluedo benchmark",
-  "players": 2,
-  "image": "none",
-  "languages": ["en"]
-}

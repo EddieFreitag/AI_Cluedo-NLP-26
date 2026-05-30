@@ -1,6 +1,6 @@
 {
     "seed": 42,
-    "n_players": 3,
+    "n_players": 2,
     "max_turns": 10,
     "instances": [
         {
@@ -15,21 +15,20 @@
                     "Library",
                     "Peacock",
                     "Wrench",
-                    "Knife"
-                ],
-                "Player 2": [
+                    "Knife",
                     "Hall",
                     "Scarlet",
-                    "Candlestick",
-                    "Dining Room",
-                    "Study"
+                    "Candlestick"
                 ],
-                "Player 3": [
+                "Player 2": [
+                    "Dining Room",
+                    "Study",
                     "Ballroom",
                     "Mustard",
                     "Conservatory",
                     "White",
-                    "Green"
+                    "Green",
+                    "Revolver"
                 ]
             }
         },
@@ -45,21 +44,20 @@
                     "Lead Pipe",
                     "Green",
                     "Ballroom",
-                    "Kitchen"
-                ],
-                "Player 2": [
+                    "Kitchen",
                     "Lounge",
                     "Mustard",
-                    "Dining Room",
-                    "Rope",
-                    "Candlestick"
+                    "Dining Room"
                 ],
-                "Player 3": [
+                "Player 2": [
+                    "Rope",
+                    "Candlestick",
                     "White",
                     "Scarlet",
                     "Conservatory",
                     "Plum",
-                    "Wrench"
+                    "Wrench",
+                    "Library"
                 ]
             }
         },
@@ -75,21 +73,20 @@
                     "Mustard",
                     "Peacock",
                     "Green",
-                    "Dining Room"
-                ],
-                "Player 2": [
+                    "Dining Room",
                     "Rope",
                     "Kitchen",
-                    "Plum",
-                    "Conservatory",
-                    "Library"
+                    "Plum"
                 ],
-                "Player 3": [
+                "Player 2": [
+                    "Conservatory",
+                    "Library",
                     "Knife",
                     "Hall",
                     "Study",
                     "Revolver",
-                    "Ballroom"
+                    "Ballroom",
+                    "White"
                 ]
             }
         },
@@ -105,21 +102,20 @@
                     "Dining Room",
                     "Hall",
                     "Ballroom",
-                    "Lead Pipe"
-                ],
-                "Player 2": [
+                    "Lead Pipe",
                     "White",
                     "Conservatory",
-                    "Knife",
-                    "Study",
-                    "Peacock"
+                    "Knife"
                 ],
-                "Player 3": [
+                "Player 2": [
+                    "Study",
+                    "Peacock",
                     "Candlestick",
                     "Lounge",
                     "Green",
                     "Library",
-                    "Mustard"
+                    "Mustard",
+                    "Wrench"
                 ]
             }
         },
@@ -135,21 +131,20 @@
                     "Lounge",
                     "Conservatory",
                     "Library",
-                    "Mustard"
-                ],
-                "Player 2": [
+                    "Mustard",
                     "Scarlet",
                     "Dining Room",
-                    "Study",
-                    "Green",
-                    "Revolver"
+                    "Study"
                 ],
-                "Player 3": [
+                "Player 2": [
+                    "Green",
+                    "Revolver",
                     "Kitchen",
                     "Peacock",
                     "Knife",
                     "Hall",
-                    "White"
+                    "White",
+                    "Candlestick"
                 ]
             }
         },
@@ -165,21 +160,20 @@
                     "Conservatory",
                     "Peacock",
                     "Ballroom",
-                    "Lead Pipe"
-                ],
-                "Player 2": [
+                    "Lead Pipe",
                     "Knife",
                     "Mustard",
-                    "Wrench",
-                    "Plum",
-                    "Green"
+                    "Wrench"
                 ],
-                "Player 3": [
+                "Player 2": [
+                    "Plum",
+                    "Green",
                     "Library",
                     "Lounge",
                     "Hall",
                     "Revolver",
-                    "Study"
+                    "Study",
+                    "Candlestick"
                 ]
             }
         },
@@ -195,21 +189,20 @@
                     "Kitchen",
                     "Library",
                     "Dining Room",
-                    "Green"
-                ],
-                "Player 2": [
+                    "Green",
                     "Ballroom",
                     "Hall",
-                    "Knife",
-                    "Wrench",
-                    "White"
+                    "Knife"
                 ],
-                "Player 3": [
+                "Player 2": [
+                    "Wrench",
+                    "White",
                     "Conservatory",
                     "Scarlet",
                     "Mustard",
                     "Study",
-                    "Lead Pipe"
+                    "Lead Pipe",
+                    "Plum"
                 ]
             }
         },
@@ -225,21 +218,20 @@
                     "Wrench",
                     "Library",
                     "Conservatory",
-                    "Hall"
-                ],
-                "Player 2": [
+                    "Hall",
                     "Lounge",
                     "Scarlet",
-                    "Revolver",
-                    "White",
-                    "Knife"
+                    "Revolver"
                 ],
-                "Player 3": [
+                "Player 2": [
+                    "White",
+                    "Knife",
                     "Plum",
                     "Mustard",
                     "Rope",
                     "Ballroom",
-                    "Dining Room"
+                    "Dining Room",
+                    "Lead Pipe"
                 ]
             }
         },
@@ -255,21 +247,20 @@
                     "Green",
                     "Hall",
                     "Study",
-                    "Library"
-                ],
-                "Player 2": [
+                    "Library",
                     "Knife",
                     "Kitchen",
-                    "Revolver",
-                    "Rope",
-                    "Wrench"
+                    "Revolver"
                 ],
-                "Player 3": [
+                "Player 2": [
+                    "Rope",
+                    "Wrench",
                     "Scarlet",
                     "Lounge",
                     "Lead Pipe",
                     "White",
-                    "Conservatory"
+                    "Conservatory",
+                    "Ballroom"
                 ]
             }
         },
@@ -285,21 +276,20 @@
                     "Knife",
                     "Scarlet",
                     "Peacock",
-                    "Rope"
-                ],
-                "Player 2": [
+                    "Rope",
                     "Plum",
                     "Conservatory",
-                    "Wrench",
-                    "Candlestick",
-                    "Kitchen"
+                    "Wrench"
                 ],
-                "Player 3": [
+                "Player 2": [
+                    "Candlestick",
+                    "Kitchen",
                     "Study",
                     "Revolver",
                     "Dining Room",
                     "White",
-                    "Library"
+                    "Library",
+                    "Hall"
                 ]
             }
         }

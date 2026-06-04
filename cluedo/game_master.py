@@ -53,7 +53,7 @@ class CluedoGameState:
 
         if response['action'].lower() == "suggest":
             # need to check wether a player holds any of the suggested cards and show one
-            print(f"{current_player.name} takes action: {response}")
+            print(f"{current_player.name} makes move: {response}")
             suspect = response['suspect']
             weapon = response['weapon']
             room = response['room']
@@ -124,7 +124,13 @@ class CluedoOrchestrator:
     def parse_response(self, response) -> dict:
         # This function will parse the response from the player
         # For simplicity, we will just print the response here
-        return json.loads(response['message']['content']) 
+        try:
+            parsed_response = json.loads(response['message']['content']) 
+            return parsed_response
+        except:
+            self.game_state.game_over = True
+            print(f"Not Json format: {response}")
+
 
     def inform_player(self, player: CluedoPlayer, update: tuple, is_current_player: bool):
         # This function will inform the player about the update in the game state
@@ -136,6 +142,7 @@ class CluedoOrchestrator:
             prompt = self.create_prompt("update", player, other_player_info)
         response = self.parse_response(player.get_response(prompt))
         player.notebook = response['notebook']
+        print(f"{player.name}'s notebook:\n {player.notebook}\n\n")
         
         
 
@@ -145,7 +152,7 @@ class CluedoOrchestrator:
             self.game_state.game_over = True
             return not self.game_state.game_over
         
-        print(f"Advancing to turn {self.game_state.current_turn}")
+        print(f"Advancing to turn {self.game_state.current_turn}\n")
         # so each player has a turn to make a move[suggest, accuse]
         # each player will be informed about the move and update their notebook
         for player in self.players:
@@ -153,15 +160,18 @@ class CluedoOrchestrator:
                 continue
             # player makes suggestion or accusation
             prompt = self.create_prompt("action", player)
-            response = player.get_response(prompt)
-            response = self.parse_response(response)
+            response = self.parse_response(player.get_response(prompt))
+            
             # game state is updated based on the action
             update = self.game_state.update_state(response, player)
             # update contains info such as "Player 1 suggested: miss scarlet" and "Player 2 showed a card to Player 1"
+            print("-"*60)
+            print("Players update their notebooks:")
             for p in self.players:
                 if p.has_lost:
                     continue
                 self.inform_player(p, update, p==player)
+            print("-"*60)
     
         return not self.game_state.game_over
     
@@ -170,7 +180,7 @@ class CluedoOrchestrator:
         if type=="action":
             system_prompt_action = self.prompts["system_prompt_action"]
             # replace placeholders with variables
-            user_prompt_action = self.prompts["action_prompt"].replace("$WEAPONS", str(WEAPONS)).replace("$ROOMS", str(ROOMS)).replace("$SUSPECTS", str(SUSPECTS)).replace("$CARDS", str(player.cards)).replace("$NOTEBOOK", player.notebook)
+            user_prompt_action = self.prompts["action_prompt"].replace("$WEAPONS", str(WEAPONS)).replace("$ROOMS", str(ROOMS)).replace("$SUSPECTS", str(SUSPECTS)).replace("$CARDS", str(player.cards)).replace("$NOTEBOOK", player.notebook).replace("PLAYER", player.name)
             prompt = {
                     "system": system_prompt_action,
                     "user": user_prompt_action
@@ -179,7 +189,7 @@ class CluedoOrchestrator:
         # prompt the player to update their notebook for that we need the update
         elif type=="update":
             system_prompt_notebook = self.prompts["system_prompt_notebook"]
-            user_prompt_notebook = self.prompts["notebook_prompt"].replace("$NOTEBOOK", player.notebook).replace("$INFO", update).replace("$CARDS", str(player.cards))
+            user_prompt_notebook = self.prompts["notebook_prompt"].replace("$NOTEBOOK", player.notebook).replace("$INFO", update).replace("$CARDS", str(player.cards)).replace("$PLAYER", player.name)
             prompt = {
                     "system": system_prompt_notebook,
                     "user": user_prompt_notebook

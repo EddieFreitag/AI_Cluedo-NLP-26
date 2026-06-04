@@ -1,7 +1,7 @@
 {
     "seed": 42,
     "n_players": 2,
-    "max_turns": 10,
+    "max_turns": 3,
     "instances": [
         {
             "solution": {

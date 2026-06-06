@@ -1,6 +1,7 @@
 import json
 import argparse
 from ollama import chat
+from google import genai
 from instancegenerator import SUSPECTS, WEAPONS, ROOMS
 
 def parse_args():
@@ -8,13 +9,26 @@ def parse_args():
     parser.add_argument("models", nargs="*")
     return parser.parse_args()
 
+#abstract class for a cluedo player
 class CluedoPlayer:
     def __init__(self, name: str, model: str, cards=[]):
         self.has_lost = False
         self.name = name
         self.model = model
         self.cards = cards
+        self.context = ""
         self.notebook = ""
+
+    def get_response(self, message: dict):
+        pass
+
+    def add_context(self, context: str):
+        self.context = self.context + " " + context
+
+
+class OllamaCluedoPlayer(CluedoPlayer):
+    def __init__(self, name: str, model: str, cards=[]):
+        super().__init__(name, model, cards)
 
     def get_response(self, message: dict):
         response = chat(
@@ -31,6 +45,18 @@ class CluedoPlayer:
             ]
         )
         return response
+    
+class GeminiCluedoPlayer(CluedoPlayer):
+    def __init__(self, name: str, model: str, cards=[], api_key=None):
+        super().__init__(name, model, cards)
+        self.client = genai.Client(api_key=api_key)
+        
+
+    def get_response(self, message: dict):
+        # we need to convert the message dict to a string for gemini
+        prompt = f"System: {message['system']}\nUser: {message['user']}"
+        response = self.client.models.generate_content(model=self.model, contents=prompt)
+        return response.text
 
 class CluedoGameState:
     def __init__(self, n_players: int, max_turns: int, solution: dict, players: list):
@@ -41,6 +67,7 @@ class CluedoGameState:
         self.solution = solution
         self.players = players
         self.player_knowledge = {player.name: player.cards for player in self.players}
+        print(f"Initial game state: {self.__dict__}")
 
     def print_current_state(self):
         print(f"Turn: {self.current_turn}")
@@ -53,27 +80,26 @@ class CluedoGameState:
 
         if response['action'].lower() == "suggest":
             # need to check wether a player holds any of the suggested cards and show one
-            print(f"{current_player.name} makes move: {response}")
             suspect = response['suspect']
             weapon = response['weapon']
             room = response['room']
-            current_player_info = ""
-            other_player_info = ""
+            current_player_info = f"You suggested: suspect: {suspect} weapon: {weapon} room: {room}. "
+            other_player_info = f"{current_player.name} suggested: suspect: {suspect} weapon: {weapon} room: {room}. "
             card = ""
             shows_card = False
             for p in self.players:
                 # if p holds a suggested card he shows it and we stop
                 if p != current_player:
-                    p_cards = [c.lower() for c in p.cards]
-                    if suspect.lower() in p_cards:
+                    p_cards = [c.lower().strip() for c in p.cards]
+                    if suspect.lower().strip() in p_cards:
                         card = suspect
                         shows_card = True
                         break
-                    elif weapon.lower() in p.cards:
+                    elif weapon.lower().strip() in p_cards:
                         card = weapon
                         shows_card = True
                         break
-                    elif room.lower() in p.cards:
+                    elif room.lower().strip() in p_cards:
                         card = room
                         shows_card = True
                         break
@@ -82,8 +108,8 @@ class CluedoGameState:
                         other_player_info += f"{p.name} can't show any card to {current_player.name}. "
             # Some player held a suggested card
             if shows_card:
-                current_player_info += f"{p.name} shows you the card: {card}"
-                other_player_info += f"{p.name} shows a card to {current_player.name}"
+                current_player_info += f"{p.name} shows you the card: {card}."
+                other_player_info += f"{p.name} show a card to {current_player.name}."
             # No player can disprove the suggestion.
             else:
                 clue = f"None of the players could disprove {current_player.name}'s suggestion."
@@ -111,38 +137,48 @@ class CluedoGameState:
 
 
 class CluedoOrchestrator:
+    #  TODO set initial context for each player, then just append the updates to the context and when creating the prompt for the player use their context + the notebook
     def __init__(self, game_state: CluedoGameState, players: list):
         self.game_state = game_state
         self.players = players
         self.prompts = self.load_prompts()
+        self.set_initial_context()
+        print("Orchestrator initialized with game state and players.")
     
     def load_prompts(self):
         with open("resources/prompts.json", "r") as f:
             prompts = json.load(f)
         return prompts
 
+    def set_initial_context(self):
+         for player in self.players:
+            initial_context = self.prompts["initial_context"].replace("$PLAYER", player.name).replace("$CARDS", str(player.cards)).replace("$WEAPONS", str(WEAPONS)).replace("$ROOMS", str(ROOMS)).replace("$SUSPECTS", str(SUSPECTS))
+            player.add_context(initial_context)
+
     def parse_response(self, response) -> dict:
         # This function will parse the response from the player
         # For simplicity, we will just print the response here
         try:
-            parsed_response = json.loads(response['message']['content']) 
-            return parsed_response
-        except:
+            if isinstance(response, str):
+                return json.loads(response)
+
+            return json.loads(response["message"]["content"])
+        except Exception as e:
             self.game_state.game_over = True
+            print(f"Error: {e}")
             print(f"Not Json format: {response}")
 
 
-    def inform_player(self, player: CluedoPlayer, update: tuple, is_current_player: bool):
+    def inform_player(self, player: CluedoPlayer, update: tuple, is_current_player: bool) -> None:
         # This function will inform the player about the update in the game state
-        # For simplicity, we will just print the update here
+        # Add info to context
         current_player_info, other_player_info = update
-        if is_current_player:
-            prompt = self.create_prompt("update", player, current_player_info)
-        else:
-            prompt = self.create_prompt("update", player, other_player_info)
+        # for other players we want to replace their name with "you" for easier understanding
+        other_player_info = other_player_info.replace(player.name, "You")
+
+        prompt = self.create_prompt("update", player, update=current_player_info if is_current_player else other_player_info)
         response = self.parse_response(player.get_response(prompt))
         player.notebook = response['notebook']
-        print(f"{player.name}'s notebook:\n {player.notebook}\n\n")
         
         
 
@@ -159,28 +195,31 @@ class CluedoOrchestrator:
             if player.has_lost:
                 continue
             # player makes suggestion or accusation
+
+            #Debug
+            print(f"\t{player.name}'s turn.\n")
             prompt = self.create_prompt("action", player)
             response = self.parse_response(player.get_response(prompt))
-            
             # game state is updated based on the action
             update = self.game_state.update_state(response, player)
+
             # update contains info such as "Player 1 suggested: miss scarlet" and "Player 2 showed a card to Player 1"
-            print("-"*60)
-            print("Players update their notebooks:")
             for p in self.players:
                 if p.has_lost:
                     continue
                 self.inform_player(p, update, p==player)
-            print("-"*60)
+            print(f"Context for {player.name}: {player.context}\n")
+
     
         return not self.game_state.game_over
     
-    def create_prompt(self, type: str, player: CluedoPlayer, update="") -> dict:
+    def create_prompt(self, type: str, player: CluedoPlayer, update="") -> str:
+        # TODO rewrite this to use the context
         # prompts the player to take an action
         if type=="action":
             system_prompt_action = self.prompts["system_prompt_action"]
             # replace placeholders with variables
-            user_prompt_action = self.prompts["action_prompt"].replace("$WEAPONS", str(WEAPONS)).replace("$ROOMS", str(ROOMS)).replace("$SUSPECTS", str(SUSPECTS)).replace("$CARDS", str(player.cards)).replace("$NOTEBOOK", player.notebook).replace("PLAYER", player.name)
+            user_prompt_action = f"{player.context}\n\n{self.prompts['action_prompt'].replace('$NOTEBOOK', player.notebook)}"
             prompt = {
                     "system": system_prompt_action,
                     "user": user_prompt_action
@@ -189,7 +228,9 @@ class CluedoOrchestrator:
         # prompt the player to update their notebook for that we need the update
         elif type=="update":
             system_prompt_notebook = self.prompts["system_prompt_notebook"]
-            user_prompt_notebook = self.prompts["notebook_prompt"].replace("$NOTEBOOK", player.notebook).replace("$INFO", update).replace("$CARDS", str(player.cards)).replace("$PLAYER", player.name)
+            user_prompt_notebook = f"{player.context}\n\n{self.prompts['notebook_prompt'].replace('$NOTEBOOK', player.notebook).replace('$INFO', update)}"
+            # add context to player after creating the prompt so it isnt shown twice
+            player.add_context(update)
             prompt = {
                     "system": system_prompt_notebook,
                     "user": user_prompt_notebook
@@ -197,6 +238,7 @@ class CluedoOrchestrator:
             return prompt
     
     def start_game(self):
+        print("Starting game loop.")
         while self.advance_game():
             pass
         self.end_game()
@@ -207,11 +249,18 @@ class CluedoOrchestrator:
 
 class CluedoGame:
     def __init__(self, models):
+        print(f"Initializing game with models: {models}")
         self.game_state = None
         self.players = []
+        model_api_mapping = json.load(open("models.json", "r"))
         for i, model in enumerate(models):
-            self.players.append(CluedoPlayer(f"Player {i+1}", model))
+            if model in model_api_mapping["ollama"]:
+                self.players.append(OllamaCluedoPlayer(f"Player {i+1}", model))
+            elif model in model_api_mapping["gemini"]:
+                key = json.load(open("keys.json", "r"))["gemini"]
+                self.players.append(GeminiCluedoPlayer(f"Player {i+1}", model, api_key=key))
         self.orchestrator = None
+        
         
     def run_game(self, index=0):
         experiment = json.load(open("instances/instances.json", "r"))

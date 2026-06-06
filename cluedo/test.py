@@ -1,8 +1,17 @@
+from google import genai
+import json
 
-from instancegenerator import WEAPONS, SUSPECTS, ROOMS
+key = json.load(open("cluedo/keys.json", "r"))["gemini"]
 
-#test = "You are playing a game of Cluedo. The goal of the game is to determine the suspect, weapon, and room involved in a murder. You can only take one of the following actions: accuse or suggest. Possible suspects: $SUSPECTS, possible weapons: $WEAPONS, possible rooms: $ROOMS."
-#print(test.replace("$WEAPONS", str(WEAPONS)).replace("$ROOMS", str(ROOMS)).replace("$SUSPECTS", str(SUSPECTS)))
 
-a = ["a", "b"]
-print("a" in a)
+client = genai.Client(api_key=key)
+
+
+chat = client.chats.create(model="gemini-3.5-flash")
+
+response1 = chat.send_message("I have 2 dogs in my house.")
+print("Response 1:", response1.text)
+
+response2 = chat.send_message("How many paws are in my house?")
+print("Response 2:", response2.text)
+

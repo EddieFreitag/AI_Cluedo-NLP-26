@@ -1,0 +1,4 @@
+{
+    "ollama": ["llama3:8b", "gemma3:8b", "qwen2.5:7b"],
+    "gemini": ["gemini-3.5-flash", "gemini-3.1-flash-lite", "gemini-3.1-flash"]
+}

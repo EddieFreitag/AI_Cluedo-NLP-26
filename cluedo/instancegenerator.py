@@ -18,7 +18,7 @@ SUSPECTS = [
 
 WEAPONS = [
     "Rope",
-    "Knife",
+    "Dagger",
     "Candlestick",
     "Revolver",
     "Lead Pipe",
@@ -33,12 +33,13 @@ ROOMS = [
     "Library",
     "Lounge",
     "Hall",
-    "Study"
+    "Study",
+    "Billiard Room"
 ]
 
 
 class CluedoInstanceGenerator:
-    def __init__(self, seed=SEED, n_players=2, max_turns=3, n_instances=10):
+    def __init__(self, seed=SEED, n_players=2, max_turns=5, n_instances=10):
         self.seed = seed
         self.n_players = n_players
         self.max_turns = max_turns

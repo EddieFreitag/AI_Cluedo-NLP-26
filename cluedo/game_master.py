@@ -1,15 +1,10 @@
 import json
-import argparse
 from ollama import chat
 from google import genai
 from groq import Groq
 from instancegenerator import SUSPECTS, WEAPONS, ROOMS
 from utils.card_normalization import normalize_card_name
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("models", nargs="*")
-    return parser.parse_args()
 
 # Resoponse schemas for Ollama models
 ACTION_SCHEMA = {
@@ -110,10 +105,26 @@ class CluedoGameState:
 
     def update_state(self, response, current_player: CluedoPlayer) -> tuple:
         # This function will update the game state based on the player's response
-        has_won = False        
-        suspect = normalize_card_name(response['suspect'])
-        weapon = normalize_card_name(response['weapon'])
-        room = normalize_card_name(response['room'])
+        has_won = False    
+        try:    
+            suspect = normalize_card_name(response['suspect'])
+            weapon = normalize_card_name(response['weapon'])
+            room = normalize_card_name(response['room'])
+        except Exception as e:
+            print(e)
+            print("--> Error normalizing card.")
+            current_player_info = ""
+            current_player.has_lost = True
+            other_player_info = f"{current_player.name} has made a move containing a card that does not belong to the game. He has lost and can't continue to play. However, he will continue to answer to your suggestions."
+            log = {
+                "event": "player_excluded",
+                "reason": "invalid_card",
+                "turn": self.current_turn,
+                "player": current_player.name,
+                "raw_response": response
+            }
+            return current_player_info, other_player_info, log, has_won
+
         log = {
             "type": "",
             "cards":
@@ -288,7 +299,7 @@ class CluedoOrchestrator:
         self.game_state.current_turn += 1
         if self.game_state.current_turn > self.game_state.max_turns:
             self.game_state.game_over = True
-
+            print(f"--> Max turns reached.")
             self.logger.log({
                 "event": "game_over",
                 "reason": "max_turns_reached",
@@ -300,7 +311,7 @@ class CluedoOrchestrator:
         
         # check if all players have lost
         if all(player.has_lost for player in self.players):
-            print("--> All players have lost. Game over.")
+            print(f"--> Round {self.game_state.current_turn}: All players have lost.")
             self.game_state.game_over = True
 
             self.logger.log({
@@ -391,25 +402,17 @@ class CluedoOrchestrator:
 
     def end_game(self):
         print("Game Over.")
-        self.logger.finalize()
 
 
 class CluedoGame:
-    def __init__(self, models):
+    def __init__(self, models, instance, n_players, max_turns, id):
         self.models = models
-        self.experiment = json.load(open("instances/instances.json", "r"))
+        self.instance = instance
+        self.n_players = n_players
+        self.max_turns = max_turns
+        self.id = id
 
-    def run_game(self, index=0):
-        game = self.experiment["instances"][index]
-        n_players=self.experiment["n_players"]
-
-        print(f"Initializing game with models: {self.models}")
-        if len (self.models) < 2:
-            self.models = self.models * n_players
-            print(f"--> Setting all models to {self.models[0]} since less than 2 models were provided.")
-        else:
-            assert len(self.models) == n_players, f"Number of models provided ({len(self.models)}) must match the number of players ({n_players})."
-        
+    def run_game(self):
         players = []
         model_api_mapping = json.load(open("models.json", "r"))
         for i, model in enumerate(self.models):
@@ -421,20 +424,17 @@ class CluedoGame:
             elif model in model_api_mapping["groq"]:
                 key = json.load(open("keys.json", "r"))["groq"]
                 players.append(GroqCluedoPlayer(f"Player {i+1}", model, api_key=key))
+            else:
+                print("--> Warning no players matched.")
         # give cards to players
         for player in players:
-            player.cards = game['player_cards'][player.name]
+            player.cards = self.instance['player_cards'][player.name]
 
         game_state = CluedoGameState(
-            n_players=n_players,
-            max_turns=self.experiment["max_turns"],
-            solution=game["solution"],
+            n_players=self.n_players,
+            max_turns=self.max_turns,
+            solution=self.instance["solution"],
             players = players
         )
-        self.orchestrator = CluedoOrchestrator(game_state, GameLogger(game_id=index), players)
+        self.orchestrator = CluedoOrchestrator(game_state, GameLogger(game_id=self.id), players)
         self.orchestrator.start_game()
-
-if __name__ == "__main__":
-    args = parse_args()
-    game = CluedoGame(args.models)
-    game.run_game()

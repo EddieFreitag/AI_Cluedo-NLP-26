@@ -11,6 +11,25 @@ def parse_args():
     parser.add_argument("models", nargs="*")
     return parser.parse_args()
 
+# Resoponse schemas for Ollama models
+ACTION_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "action": {"type": "string", "enum": ["suggest", "accuse"]},
+        "suspect": {"type": "string"},
+        "weapon": {"type": "string"},
+        "room": {"type": "string"}
+    },
+    "required": ["action", "suspect", "weapon", "room"]
+}
+
+NOTEBOOK_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "notebook": {"type": "string"}
+    },
+    "required": ["notebook"]
+}
 #abstract class for a cluedo player
 class CluedoPlayer:
     def __init__(self, name: str, model: str, cards=[]):
@@ -21,8 +40,8 @@ class CluedoPlayer:
         self.context = ""
         self.notebook = ""
 
-    def get_response(self, message: dict):
-        pass
+    def get_response(self, message: dict, schema=None):
+        raise NotImplementedError
 
     def add_context(self, context: str):
         self.context = self.context + " " + context
@@ -32,19 +51,19 @@ class OllamaCluedoPlayer(CluedoPlayer):
     def __init__(self, name: str, model: str, cards=[]):
         super().__init__(name, model, cards)
 
-    def get_response(self, message: dict):
+    def get_response(self, message: dict, schema=None):
+
+        kwargs = {}
+        if schema is not None:
+            kwargs["format"] = schema
+
         response = chat(
             model=self.model,
             messages=[
-                {
-                    'role': 'system',
-                    'content': message['system']
-                },
-                {
-                    'role': 'user',
-                    'content': message['user']
-                }
-            ]
+                {'role': 'system', 'content': message['system']},
+                {'role': 'user', 'content': message['user']}
+            ],
+            **kwargs
         )
         return response
     
@@ -54,7 +73,7 @@ class GeminiCluedoPlayer(CluedoPlayer):
         self.client = genai.Client(api_key=api_key)
         
 
-    def get_response(self, message: dict):
+    def get_response(self, message: dict, schema=None):
         # we need to convert the message dict to a string for gemini
         prompt = f"System: {message['system']}\nUser: {message['user']}"
         response = self.client.models.generate_content(model=self.model, contents=prompt)
@@ -65,7 +84,7 @@ class GroqCluedoPlayer(CluedoPlayer):
         super().__init__(name, model, cards)
         self.client = Groq(api_key=api_key)
 
-    def get_response(self, message: dict):
+    def get_response(self, message: dict, schema=None):
         response = self.client.chat.completions.create(messages=[
                 {"role": "system", "content": message['system']}, 
                 {"role": "user", "content": message['user']}
@@ -82,29 +101,40 @@ class CluedoGameState:
         self.max_turns = max_turns
         self.solution = solution
         self.players = players
-        self.player_knowledge = {player.name: player.cards for player in self.players}
+        self.winner = None | CluedoPlayer
         print(f"Initial game state: {self.__dict__}")
 
     def print_current_state(self):
         print(f"Turn: {self.current_turn}")
         print(f"Player Knowledge:")
-        for player, knowledge in self.player_knowledge.items():
-            print(f"{player}: {knowledge}")
 
     def update_state(self, response, current_player: CluedoPlayer) -> tuple:
-        # This function will update the game state based on the player's response        
-
+        # This function will update the game state based on the player's response
+        has_won = False        
+        suspect = normalize_card_name(response['suspect'])
+        weapon = normalize_card_name(response['weapon'])
+        room = normalize_card_name(response['room'])
+        log = {
+            "type": "",
+            "cards":
+            {
+                "suspect": suspect,
+                "weapon": weapon,
+                "room": room,
+            }
+        }
+        
         if response['action'].lower() == "suggest":
+            log["type"] = "suggest"
+            log["reactions"] = []
             # need to check wether a player holds any of the suggested cards and show one
-            suspect = normalize_card_name(response['suspect'])
-            weapon = normalize_card_name(response['weapon'])
-            room = normalize_card_name(response['room'])
             print(f"--> {current_player.name} suggested: suspect: {suspect} weapon: {weapon} room: {room}.\n")
 
             current_player_info = f"You suggested: suspect: {suspect} weapon: {weapon} room: {room}. "
             other_player_info = f"{current_player.name} suggested: suspect: {suspect} weapon: {weapon} room: {room}. "
             card = ""
             shows_card = False
+            
 
             for p in self.players:
                 # if p holds a suggested card he shows it and we stop
@@ -125,48 +155,75 @@ class CluedoGameState:
                     else:
                         current_player_info += f"{p.name} can't show any card to you. "
                         other_player_info += f"{p.name} can't show any card to {current_player.name}. "
+                        log["reactions"].append(
+                            {
+                                "player": p.name,
+                                "action": "cannot_disprove",
+                            }
+                        )
 
             # Some player held a suggested card
             if shows_card:
                 print(f"--> {p.name} shows {card} to {current_player.name}.\n")
-                self.player_knowledge[current_player.name].append(card)
-                current_player_info += f"{p.name} shows you the card: {card}."
+                current_player_info += f"{p.name} shows you their card: {card}."
                 other_player_info += f"{p.name} show a card to {current_player.name}."
-
+                log["reactions"].append(
+                    {
+                        "player": p.name,
+                        "action": "shows_card",
+                        "card": card,
+                    }
+                )
+                
             # No player can disprove the suggestion.
             else:
-                clue = f"None of the players could disprove {current_player.name}'s suggestion."
+                clue = f"None of the other players could disprove {current_player.name}'s suggestion."
                 print(f"--> {clue}\n")
                 current_player_info += clue
                 other_player_info += clue
             
         # accusation if correct game-over and win otherwise current_player lost
         elif response["action"].lower() == "accuse":
+            log["type"] = "accuse"
             # check if solution is true
-            print(f"--> {current_player.name} made an accusation: suspect: {response['suspect']} weapon: {response['weapon']} room: {response['room']}.\n")
+            print(f"--> {current_player.name} made an accusation: suspect: {suspect}, weapon: {weapon}, room: {room}.\n")
             if self.solution == {
-                "suspect": normalize_card_name(response["suspect"]),
-                "weapon": normalize_card_name(response["weapon"]),
-                "room": normalize_card_name(response["room"]),
+                "suspect": suspect,
+                "weapon": weapon,
+                "room": room
             }:
                 print(f"--> {current_player.name} has correctly identified the solution!")
                 self.game_over = True
+                has_won = True
+                self.winner = current_player
                 current_player_info = f"Your accusation was correct you win!"
-                other_player_info = f"{current_player.name}'s accusation is correct he won. The game is over."    
+                other_player_info = f"{current_player.name}'s accusation is correct he won. The game is over."
+                log["has_won"] = has_won
             else:
                 print(f"--> {current_player.name}'s accusation is wrong. He has lost and can't continue to play. However, he will continue to answer to your suggestions.\n")
                 current_player.has_lost = True
+                log["has_won"] = has_won
                 current_player_info = f"Your accusation {response} was wrong, the correct solution is {self.solution}. You lost the game."
                 other_player_info = f"{current_player.name} has made the accusation: {response}. It was wrong. He has lost and can't continue to play. However, he will continue to answer to your suggestions."
         
         
-        return (current_player_info, other_player_info)
+        return current_player_info, other_player_info, log, has_won
 
+class GameLogger:
+    def __init__(self, game_id: str):
+        self.game_id = game_id
+        self.events = []
+
+    def log(self, event: dict):
+        self.events.append(event)
+    
+    def finalize(self):
+        return {"game_id": self.game_id, "events": self.events}
 
 class CluedoOrchestrator:
-    #  TODO set initial context for each player, then just append the updates to the context and when creating the prompt for the player use their context + the notebook
-    def __init__(self, game_state: CluedoGameState, players: list):
+    def __init__(self, game_state: CluedoGameState, logger: GameLogger, players: list):
         self.game_state = game_state
+        self.logger = logger
         self.players = players
         self.prompts = self.load_prompts()
         self.set_initial_context()
@@ -197,20 +254,33 @@ class CluedoOrchestrator:
             return {"notebook": ""}, False
 
 
-    def inform_player(self, player: CluedoPlayer, update: tuple, is_current_player: bool) -> None:
-        # This function will inform the player about the update in the game state
-        # Add info to context
-        current_player_info, other_player_info = update
+    def inform_player(self, player: CluedoPlayer, current_player_info, other_player_info, is_current_player: bool) -> None:
+        # This function will inform the player about the update in the game state        
         # for other players we want to replace their name with "you" for easier understanding
         other_player_info = other_player_info.replace(player.name, "You")
 
         prompt = self.create_prompt("update", player, update=current_player_info if is_current_player else other_player_info)
-        response, is_valid = self.parse_response(player.get_response(prompt))
+        response, is_valid = self.parse_response(player.get_response(prompt, schema=NOTEBOOK_SCHEMA))
         if not is_valid:
-            print(f"--> Invalid response from {player.name} when informing about the update. Excluding player.")
+            print(f"--> Invalid response from {player.name} when updating the notebook. Excluding player.")
             player.has_lost = True
-            return
-        player.notebook = response['notebook']
+
+            self.logger.log({
+                "event": "player_excluded",
+                "reason": "invalid_response_notebook",
+                "turn": self.game_state.current_turn,
+                "player": player.name,
+                "raw_response": response
+            })
+        else:
+            self.logger.log({
+                "event": "player_notebook",
+                "turn": self.game_state.current_turn,
+                "player": player.name,
+                "is_valid": True,
+                "raw_response": response['notebook']
+            })
+            player.notebook = response['notebook']
         
         
 
@@ -218,6 +288,28 @@ class CluedoOrchestrator:
         self.game_state.current_turn += 1
         if self.game_state.current_turn > self.game_state.max_turns:
             self.game_state.game_over = True
+
+            self.logger.log({
+                "event": "game_over",
+                "reason": "max_turns_reached",
+                "turn": self.game_state.current_turn,
+                "winner": None,
+            })
+
+            return not self.game_state.game_over
+        
+        # check if all players have lost
+        if all(player.has_lost for player in self.players):
+            print("--> All players have lost. Game over.")
+            self.game_state.game_over = True
+
+            self.logger.log({
+                "event": "game_over",
+                "reason": "all_players_lost",
+                "turn": self.game_state.current_turn,
+                "winner": None,
+            })
+
             return not self.game_state.game_over
         
         print(f"Advancing to turn {self.game_state.current_turn}\n")
@@ -227,30 +319,48 @@ class CluedoOrchestrator:
             if player.has_lost:
                 continue
             # player makes suggestion or accusation
-
-            #Debug
             print(f"\t{player.name}'s turn.\n")
             prompt = self.create_prompt("action", player)
-            response, is_valid = self.parse_response(player.get_response(prompt))
+            response, is_valid = self.parse_response(player.get_response(prompt, schema=ACTION_SCHEMA))
+
             if not is_valid:
                 print(f"--> Invalid response from {player.name} when making a move. Excluding player.")
                 player.has_lost = True
+
+                self.logger.log({
+                    "event": "player_excluded",
+                    "reason": "invalid_response_action",
+                    "turn": self.game_state.current_turn,
+                    "player": player.name,
+                    "raw_response": response
+                })
                 continue
+
             # game state is updated based on the action
-            update = self.game_state.update_state(response, player)
+            current_player_info, other_player_info, logs, has_won = self.game_state.update_state(response, player)
+
+            self.logger.log({
+                "event": "player_action",
+                "turn": self.game_state.current_turn,
+                "player": player.name,
+                "action": logs
+            })
+
+            # if player has won then we end
+            if has_won:
+                break
 
             # update contains info such as "Player 1 suggested: miss scarlet" and "Player 2 showed a card to Player 1"
             for p in self.players:
                 if p.has_lost:
                     continue
-                self.inform_player(p, update, p==player)
+                self.inform_player(p, current_player_info, other_player_info, p==player)
             #print(f"Context for {player.name}: {player.context}\n")
-            print(f"--> Notebook for {player.name}:\n{player.notebook}\n")
+            #print(f"--> Notebook for {player.name}:\n{player.notebook}\n")
     
         return not self.game_state.game_over
     
     def create_prompt(self, type: str, player: CluedoPlayer, update="") -> str:
-        # TODO rewrite this to use the context
         # prompts the player to take an action
         if type=="action":
             system_prompt_action = self.prompts["system_prompt_action"]
@@ -281,41 +391,47 @@ class CluedoOrchestrator:
 
     def end_game(self):
         print("Game Over.")
+        self.logger.finalize()
 
 
 class CluedoGame:
     def __init__(self, models):
-        print(f"Initializing game with models: {models}")
-        self.game_state = None
-        self.players = []
+        self.models = models
+        self.experiment = json.load(open("instances/instances.json", "r"))
+
+    def run_game(self, index=0):
+        game = self.experiment["instances"][index]
+        n_players=self.experiment["n_players"]
+
+        print(f"Initializing game with models: {self.models}")
+        if len (self.models) < 2:
+            self.models = self.models * n_players
+            print(f"--> Setting all models to {self.models[0]} since less than 2 models were provided.")
+        else:
+            assert len(self.models) == n_players, f"Number of models provided ({len(self.models)}) must match the number of players ({n_players})."
+        
+        players = []
         model_api_mapping = json.load(open("models.json", "r"))
-        for i, model in enumerate(models):
+        for i, model in enumerate(self.models):
             if model in model_api_mapping["ollama"]:
-                self.players.append(OllamaCluedoPlayer(f"Player {i+1}", model))
+                players.append(OllamaCluedoPlayer(f"Player {i+1}", model))
             elif model in model_api_mapping["gemini"]:
                 key = json.load(open("keys.json", "r"))["gemini"]
-                self.players.append(GeminiCluedoPlayer(f"Player {i+1}", model, api_key=key))
+                players.append(GeminiCluedoPlayer(f"Player {i+1}", model, api_key=key))
             elif model in model_api_mapping["groq"]:
                 key = json.load(open("keys.json", "r"))["groq"]
-                self.players.append(GroqCluedoPlayer(f"Player {i+1}", model, api_key=key))
-        self.orchestrator = None
-        
-        
-    def run_game(self, index=0):
-        experiment = json.load(open("instances/instances.json", "r"))
-        game = experiment["instances"][index]
-
+                players.append(GroqCluedoPlayer(f"Player {i+1}", model, api_key=key))
         # give cards to players
-        for player in self.players:
+        for player in players:
             player.cards = game['player_cards'][player.name]
 
-        self.game_state = CluedoGameState(
-            n_players=experiment["n_players"],
-            max_turns=experiment["max_turns"],
+        game_state = CluedoGameState(
+            n_players=n_players,
+            max_turns=self.experiment["max_turns"],
             solution=game["solution"],
-            players = self.players
+            players = players
         )
-        self.orchestrator = CluedoOrchestrator(self.game_state, self.players)
+        self.orchestrator = CluedoOrchestrator(game_state, GameLogger(game_id=index), players)
         self.orchestrator.start_game()
 
 if __name__ == "__main__":

@@ -18,7 +18,7 @@ SUSPECTS = [
 
 WEAPONS = [
     "Rope",
-    "Dagger",
+    "Knife",
     "Candlestick",
     "Revolver",
     "Lead Pipe",
@@ -39,7 +39,7 @@ ROOMS = [
 
 
 class CluedoInstanceGenerator:
-    def __init__(self, seed=SEED, n_players=2, max_turns=5, n_instances=10):
+    def __init__(self, seed=SEED, n_players=2, max_turns=6, n_instances=10):
         self.seed = seed
         self.n_players = n_players
         self.max_turns = max_turns
@@ -73,7 +73,7 @@ class CluedoInstanceGenerator:
                 "seed": self.seed,
                 "n_players": self.n_players,
                 "max_turns": self.max_turns,
-                "instances": instances
+                "games": instances
             }
             json.dump(experiment, f, indent=4)
 

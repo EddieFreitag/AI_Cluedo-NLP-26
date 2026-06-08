@@ -1,8 +1,10 @@
 import argparse
 import json
 import os
+import random
 from pathlib import Path
 from game_master import CluedoGame
+
 from instancegenerator import CluedoInstanceGenerator
 
 def parse_args():
@@ -15,11 +17,13 @@ class ExperimentRunner:
 
     def __init__(
         self,
-        model_name: list,
+        model_name: str,
+        baseline_model:str,
         instances_dir: str,
         output_file: str,
     ):
         self.model_name = model_name
+        self.baseline_model = baseline_model
         self.instances_dir = instances_dir
         self.output_file = output_file
         
@@ -33,7 +37,10 @@ class ExperimentRunner:
             games = inst['games']
             seed = inst['seed']
 
-            models = [self.model_name] * n_players
+            # create list of baseline_models and at random pos set target_model
+            pos = random.randint(0, n_players-1)
+            models = [self.baseline_model] * n_players
+            models[pos] = self.model_name
             game_logs = []
 
             for i, g in enumerate(games):
@@ -48,6 +55,8 @@ class ExperimentRunner:
             # save the instance
             experiment = {
                 "model": self.model_name,
+                "pos": pos,
+                "baseline_model": self.baseline_model,
                 "players": n_players,
                 "max_turns": max_turns,
                 "seed": seed,
@@ -84,5 +93,6 @@ class ExperimentRunner:
 if __name__ == "__main__":
     args = parse_args()
     model = args.model_name
-    exp = ExperimentRunner(model, "instances", output_file=f"results/{model}.jsonl")
+    baseline_model = "llama3:8b"
+    exp = ExperimentRunner(model, baseline_model, "instances", output_file=f"results/{model}.jsonl")
     exp.run()

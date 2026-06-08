@@ -32,28 +32,33 @@ class CluedoAnalyzer:
         breakdown = defaultdict(int)
 
         for exp in self.data:
-
+            target_model = exp.get("model")
+            pos = exp.get("pos")
+            n_players = exp.get("players")
+            for i in range(n_players):
+                stats[f"Player {i+1}"] = 0
             for game in exp["game_logs"]:
 
                 stats["games"] += 1
 
                 for event in game["events"]:
 
-                    if event.get("event") == "player_action":
-                        action = event.get("action")
-                        if action.get("type") == "accuse":
-                            if action.get("has_won"):
-                                stats["wins"] += 1
-                                stats[event.get("player")] += 1
-                            else:
-                                stats['losses'] +=1
-                                breakdown["wrong_accusation"] += 1
-                                breakdown[event.get("player")] += 1
-                    # failures
-                    elif event.get("event") == "player_excluded":
-                        breakdown[event.get("reason")] += 1
-                        breakdown[event.get("player")] += 1
-                        stats["losses"] += 1
+                    if event.get("model") == target_model:
+                        if event.get("event") == "player_action":
+                            action = event.get("action")
+                            if action.get("type") == "accuse":
+                                if action.get("has_won"):
+                                    stats["wins"] += 1
+                                    stats[event.get("player")] += 1
+                                else:
+                                    stats['losses'] +=1
+                                    breakdown["wrong_accusation"] += 1
+                                    breakdown[event.get("player")] += 1
+                        # failures
+                        elif event.get("event") == "player_excluded":
+                            breakdown[event.get("reason")] += 1
+                            breakdown[event.get("player")] += 1
+                            stats["losses"] += 1
                     elif event.get("event") == "game_over":
                         breakdown[event.get("reason")] += 1
                         stats["losses"] += 1
@@ -106,7 +111,7 @@ class CluedoAnalyzer:
 if __name__ == "__main__":
     ca = CluedoAnalyzer("results/llama3:8b.jsonl")
     print(ca.summary())
-    cb = CluedoAnalyzer("results/gemma3:12b.jsonl")
-    print(cb.summary())
-    cb = CluedoAnalyzer("results/meta-llama/llama-4-scout-17b-16e-instruct.jsonl")
-    print(cb.summary())
+    ca = CluedoAnalyzer("results/gemini-3.1-flash-lite.jsonl")
+    print(ca.summary())
+    ca = CluedoAnalyzer("results/llama-3.3-70b-versatile.jsonl")
+    print(ca.summary())

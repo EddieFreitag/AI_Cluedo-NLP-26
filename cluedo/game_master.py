@@ -1,7 +1,9 @@
 import json
+import re
 from ollama import chat
 from google import genai
 from groq import Groq
+import cohere
 from instancegenerator import SUSPECTS, WEAPONS, ROOMS
 from utils.card_normalization import normalize_card_name
 
@@ -25,6 +27,8 @@ NOTEBOOK_SCHEMA = {
     },
     "required": ["notebook"]
 }
+
+
 #abstract class for a cluedo player
 class CluedoPlayer:
     def __init__(self, name: str, model: str, cards=[]):
@@ -62,6 +66,7 @@ class OllamaCluedoPlayer(CluedoPlayer):
         )
         return response
     
+
 class GeminiCluedoPlayer(CluedoPlayer):
     def __init__(self, name: str, model: str, cards=[], api_key=None):
         super().__init__(name, model, cards)
@@ -74,6 +79,7 @@ class GeminiCluedoPlayer(CluedoPlayer):
         response = self.client.models.generate_content(model=self.model, contents=prompt)
         return response.text
     
+
 class GroqCluedoPlayer(CluedoPlayer):
     def __init__(self, name: str, model: str, cards=[], api_key=None):
         super().__init__(name, model, cards)
@@ -87,6 +93,23 @@ class GroqCluedoPlayer(CluedoPlayer):
             model=self.model
         )
         return response.choices[0].message.content
+    
+
+class CohereCluedoPlayer(CluedoPlayer):
+    def __init__(self, name: str, model: str, cards=[], api_key=None):
+        super().__init__(name, model, cards)
+        self.client = cohere.ClientV2(api_key=api_key)
+
+    def get_response(self, message: dict, schema=None):
+        response = self.client.chat(
+            messages=[
+                {"role": "system", "content": message['system']}, 
+                {"role": "user", "content": message['user']}
+            ],
+            model=self.model
+        )
+        return response.message.content[0].text
+
 
 class CluedoGameState:
     def __init__(self, n_players: int, max_turns: int, solution: dict, players: list):
@@ -121,6 +144,7 @@ class CluedoGameState:
                 "reason": "invalid_card",
                 "turn": self.current_turn,
                 "player": current_player.name,
+                "model": current_player.model,
                 "raw_response": response
             }
             return current_player_info, other_player_info, log, has_won
@@ -169,6 +193,7 @@ class CluedoGameState:
                         log["reactions"].append(
                             {
                                 "player": p.name,
+                                "model": p.model,
                                 "action": "cannot_disprove",
                             }
                         )
@@ -181,6 +206,7 @@ class CluedoGameState:
                 log["reactions"].append(
                     {
                         "player": p.name,
+                        "model": p.model,
                         "action": "shows_card",
                         "card": card,
                     }
@@ -220,6 +246,7 @@ class CluedoGameState:
         
         return current_player_info, other_player_info, log, has_won
 
+
 class GameLogger:
     def __init__(self, game_id: str):
         self.game_id = game_id
@@ -230,6 +257,7 @@ class GameLogger:
     
     def finalize(self):
         return {"game_id": self.game_id, "events": self.events}
+
 
 class CluedoOrchestrator:
     def __init__(self, game_state: CluedoGameState, logger: GameLogger, players: list):
@@ -251,19 +279,61 @@ class CluedoOrchestrator:
             player.add_context(initial_context)
 
     def parse_response(self, response) -> tuple:
-        # This function will parse the response from the player
-        # For simplicity, we will just print the response here
         try:
+            # Extract raw text from different providers
             if isinstance(response, str):
-                return json.loads(response), True
+                text = response
 
-            return json.loads(response["message"]["content"]), True
+            elif isinstance(response, dict):
+                text = response["message"]["content"]
+
+            elif hasattr(response, "message"):
+                text = response.message.content
+
+            else:
+                text = str(response)
+
+            # Remove <think>...</think> blocks (Qwen)
+            text = re.sub(
+                r"<think>.*?</think>",
+                "",
+                text,
+                flags=re.DOTALL | re.IGNORECASE
+            )
+
+            # Remove markdown code fences
+            text = re.sub(
+                r"```(?:json)?",
+                "",
+                text,
+                flags=re.IGNORECASE
+            )
+
+            text = text.strip()
+
+            # Extract first JSON object
+            match = re.search(
+                r"\{.*\}",
+                text,
+                flags=re.DOTALL
+            )
+
+            if not match:
+                raise ValueError("No JSON object found")
+
+            json_text = match.group(0)
+
+            parsed = json.loads(json_text)
+
+            return parsed, True
+
         except Exception as e:
-            self.game_state.game_over = True
             print(f"Error: {e}")
             print(f"Not Json format: {response}")
-            return {"notebook": ""}, False
 
+            # Don't end the whole game because one model
+            # wrapped JSON in weird formatting
+            return {"notebook": ""}, False
 
     def inform_player(self, player: CluedoPlayer, current_player_info, other_player_info, is_current_player: bool) -> None:
         # This function will inform the player about the update in the game state        
@@ -281,6 +351,7 @@ class CluedoOrchestrator:
                 "reason": "invalid_response_notebook",
                 "turn": self.game_state.current_turn,
                 "player": player.name,
+                "model": player.model,
                 "raw_response": response
             })
         else:
@@ -288,13 +359,12 @@ class CluedoOrchestrator:
                 "event": "player_notebook",
                 "turn": self.game_state.current_turn,
                 "player": player.name,
+                "model": player.model,
                 "is_valid": True,
                 "raw_response": response['notebook']
             })
             player.notebook = response['notebook']
         
-        
-
     def advance_game(self) -> bool:
         self.game_state.current_turn += 1
         if self.game_state.current_turn > self.game_state.max_turns:
@@ -343,6 +413,7 @@ class CluedoOrchestrator:
                     "reason": "invalid_response_action",
                     "turn": self.game_state.current_turn,
                     "player": player.name,
+                    "model": player.model,
                     "raw_response": response
                 })
                 continue
@@ -354,6 +425,7 @@ class CluedoOrchestrator:
                 "event": "player_action",
                 "turn": self.game_state.current_turn,
                 "player": player.name,
+                "model": player.model,
                 "action": logs
             })
 
@@ -367,7 +439,7 @@ class CluedoOrchestrator:
                     continue
                 self.inform_player(p, current_player_info, other_player_info, p==player)
             #print(f"Context for {player.name}: {player.context}\n")
-            #print(f"--> Notebook for {player.name}:\n{player.notebook}\n")
+            print(f"--> Notebook for {player.name}:\n{player.notebook}\n")
     
         return not self.game_state.game_over
     
@@ -424,6 +496,9 @@ class CluedoGame:
             elif model in model_api_mapping["groq"]:
                 key = json.load(open("keys.json", "r"))["groq"]
                 players.append(GroqCluedoPlayer(f"Player {i+1}", model, api_key=key))
+            elif model in model_api_mapping["cohere"]:
+                key = json.load(open("keys.json", "r"))["cohere"]
+                players.append(CohereCluedoPlayer(f"Player {i+1}", model, api_key=key))
             else:
                 print("--> Warning no players matched.")
         # give cards to players

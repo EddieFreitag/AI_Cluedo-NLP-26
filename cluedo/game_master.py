@@ -1,5 +1,6 @@
 import json
 import re
+from time import sleep
 from ollama import chat
 from google import genai
 from groq import Groq
@@ -71,9 +72,18 @@ class GeminiCluedoPlayer(CluedoPlayer):
     def __init__(self, name: str, model: str, cards=[], api_key=None):
         super().__init__(name, model, cards)
         self.client = genai.Client(api_key=api_key)
+        # set timeout so requests dont surpass rpm
+        if model == "gemini-3.5-flash":
+            # 5 rpm
+            self.timeout = 10
+        else:
+            #15 rpm
+            self.timeout = 5
         
 
     def get_response(self, message: dict, schema=None):
+        # Sleep for timeout
+        sleep(self.timeout)
         # we need to convert the message dict to a string for gemini
         prompt = f"System: {message['system']}\nUser: {message['user']}"
         response = self.client.models.generate_content(model=self.model, contents=prompt)
@@ -99,8 +109,10 @@ class CohereCluedoPlayer(CluedoPlayer):
     def __init__(self, name: str, model: str, cards=[], api_key=None):
         super().__init__(name, model, cards)
         self.client = cohere.ClientV2(api_key=api_key)
+        self.timeout = 3
 
     def get_response(self, message: dict, schema=None):
+        sleep(self.timeout)
         response = self.client.chat(
             messages=[
                 {"role": "system", "content": message['system']}, 
@@ -112,6 +124,7 @@ class CohereCluedoPlayer(CluedoPlayer):
 
 
 class CluedoGameState:
+
     def __init__(self, n_players: int, max_turns: int, solution: dict, players: list):
         self.game_over = False
         self.current_turn = 0
@@ -121,10 +134,8 @@ class CluedoGameState:
         self.players = players
         self.winner = None | CluedoPlayer
         print(f"Initial game state: {self.__dict__}")
-
-    def print_current_state(self):
-        print(f"Turn: {self.current_turn}")
-        print(f"Player Knowledge:")
+        for player in self.players:
+            print(f"{player.name}: {player.model}")
 
     def update_state(self, response, current_player: CluedoPlayer) -> tuple:
         # This function will update the game state based on the player's response
@@ -439,7 +450,7 @@ class CluedoOrchestrator:
                     continue
                 self.inform_player(p, current_player_info, other_player_info, p==player)
             #print(f"Context for {player.name}: {player.context}\n")
-            print(f"--> Notebook for {player.name}:\n{player.notebook}\n")
+            #print(f"--> Notebook for {player.name}:\n{player.notebook}\n")
     
         return not self.game_state.game_over
     
@@ -501,9 +512,19 @@ class CluedoGame:
                 players.append(CohereCluedoPlayer(f"Player {i+1}", model, api_key=key))
             else:
                 print("--> Warning no players matched.")
+                return
         # give cards to players
         for player in players:
             player.cards = self.instance['player_cards'][player.name]
+
+        logger = GameLogger(self.id)
+        logger.log(
+            {
+                "event": "init_game",
+                "models": self.models,
+                "player_cards": self.instance['player_cards']
+            }
+        )
 
         game_state = CluedoGameState(
             n_players=self.n_players,
@@ -511,5 +532,5 @@ class CluedoGame:
             solution=self.instance["solution"],
             players = players
         )
-        self.orchestrator = CluedoOrchestrator(game_state, GameLogger(game_id=self.id), players)
+        self.orchestrator = CluedoOrchestrator(game_state, logger, players)
         self.orchestrator.start_game()

@@ -37,13 +37,15 @@ class ExperimentRunner:
             games = inst['games']
             seed = inst['seed']
 
-            # create list of baseline_models and at random pos set target_model
-            pos = random.randint(0, n_players-1)
-            models = [self.baseline_model] * n_players
-            models[pos] = self.model_name
+            
             game_logs = []
 
             for i, g in enumerate(games):
+                # create list of baseline_models and at random pos set target_model
+                pos = random.randint(0, n_players-1)
+                models = [self.baseline_model] * n_players
+                models[pos] = self.model_name
+
                 print("+"+"-"*40+"+")
                 print(f"|\t Evaluating game {i+1}/{len(games)}\t\t|")
                 print("+"+"-"*40+"+")
@@ -55,7 +57,6 @@ class ExperimentRunner:
             # save the instance
             experiment = {
                 "model": self.model_name,
-                "pos": pos,
                 "baseline_model": self.baseline_model,
                 "players": n_players,
                 "max_turns": max_turns,
@@ -92,7 +93,12 @@ class ExperimentRunner:
 
 if __name__ == "__main__":
     args = parse_args()
+    # for ollama both the same
+    model_api_mapping = json.load(open("models.json", "r"))
+    model_apis = model_api_mapping
+    for model in model_api_mapping["ollama"]:
+        print(model)
     model = args.model_name
-    baseline_model = "llama3:8b"
+    baseline_model = model
     exp = ExperimentRunner(model, baseline_model, "instances", output_file=f"results/{model}.jsonl")
     exp.run()

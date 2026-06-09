@@ -39,7 +39,7 @@ ROOMS = [
 
 
 class CluedoInstanceGenerator:
-    def __init__(self, seed=SEED, n_players=2, max_turns=8, n_instances=5):
+    def __init__(self, seed=SEED, n_players=2, max_turns=10, n_instances=10):
         self.seed = seed
         self.n_players = n_players
         self.max_turns = max_turns

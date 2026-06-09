@@ -1,6 +1,6 @@
 {
-    "ollama": ["llama3:8b", "gemma3:8b", "qwen2.5:7b", "gemma3:12b", "gemma4:12b"],
-    "gemini": ["gemini-3.1-flash-lite", "gemma-4-31b-it", "gemma-4-26b-a4b-it"],
+    "ollama": ["nemotron-3-nano:4b", "ministral-3:14b", "llama3:8b", "gemma3:4b", "qwen2.5:7b", "gemma3:12b", "gpt-oss:20b"],
+    "gemini": ["gemini-3.5-flash", "gemini-3.1-flash-lite", "gemma-4-31b-it", "gemma-4-26b-a4b-it"],
     "groq": ["llama-3.3-70b-versatile", "meta-llama/llama-4-scout-17b-16e-instruct", "qwen/qwen3-32b"],
     "cohere": ["command-a-03-2025", "command-r-08-2024", "command-r7b-12-2024" ,"command-a-plus-05-2026", "command-r-plus-08-2024"]
 }

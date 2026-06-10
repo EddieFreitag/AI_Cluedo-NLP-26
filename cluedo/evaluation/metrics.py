@@ -185,7 +185,7 @@ for file in Path("results").glob("*.json"):
     all_results.update(evaluate(summary))
 
 
-with open("evaluation_summary.json", "w", encoding="utf-8") as f:
+with open("evaluation/evaluation_summary.json", "w", encoding="utf-8") as f:
     json.dump(all_results, f, indent=2)
 
 print(json.dumps(all_results, indent=2))

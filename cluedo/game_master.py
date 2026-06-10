@@ -75,10 +75,10 @@ class GeminiCluedoPlayer(CluedoPlayer):
         # set timeout so requests dont surpass rpm
         if model == "gemini-3.5-flash":
             # 5 rpm
-            self.timeout = 10
+            self.timeout = 8
         else:
             #15 rpm
-            self.timeout = 5
+            self.timeout = 3
         
 
     def get_response(self, message: dict, schema=None):

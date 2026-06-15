@@ -5336,30 +5336,30 @@
             }
         }
     },
-    "qwen/qwen3-32b.jsonl": {
+    "ministral-3:14b.jsonl": {
         "games": 10,
-        "wins": 0,
-        "losses": 10,
+        "wins": 1,
+        "losses": 9,
         "max_turns_reached": {
-            "num": 9,
-            "turn": 99
+            "num": 3,
+            "turn": 33
         },
         "all_players_lost": {
-            "num": 1,
-            "turn": 6
+            "num": 6,
+            "turn": 49
         },
         "game_0": {
             "Player 1": {
                 "player_pos": 1,
-                "model": "gemma3:4b",
-                "wins": 0,
-                "win_turn": 0,
-                "risk": 0,
-                "suggestions": 10,
-                "info_gain": 6.333333333333334,
+                "model": "ministral-3:14b",
+                "wins": 1,
+                "win_turn": 8,
+                "risk": 0.2222222222222222,
+                "suggestions": 7,
+                "info_gain": 6.666666666666666,
                 "perfect_knowledge": 0,
-                "found_solution": 0,
-                "repeated_suggestion": 8,
+                "found_solution": 3,
+                "repeated_suggestion": 0,
                 "invalid_response_notebook": {
                     "num": 0,
                     "turn": 0
@@ -5379,14 +5379,14 @@
             },
             "Player 2": {
                 "player_pos": 2,
-                "model": "qwen/qwen3-32b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
-                "risk": 0.5,
-                "suggestions": 0,
-                "info_gain": 0,
+                "risk": 0,
+                "suggestions": 7,
+                "info_gain": 7.0,
                 "perfect_knowledge": 0,
-                "found_solution": 0,
+                "found_solution": 5,
                 "repeated_suggestion": 0,
                 "invalid_response_notebook": {
                     "num": 0,
@@ -5401,26 +5401,26 @@
                     "turn": 0
                 },
                 "wrong_accusation": {
-                    "num": 1,
-                    "turn": 1
+                    "num": 0,
+                    "turn": 0
                 }
             }
         },
         "game_1": {
             "Player 1": {
                 "player_pos": 1,
-                "model": "qwen/qwen3-32b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
-                "suggestions": 4,
-                "info_gain": 4.0,
+                "suggestions": 10,
+                "info_gain": 9.333333333333334,
                 "perfect_knowledge": 0,
-                "found_solution": 0,
-                "repeated_suggestion": 0,
+                "found_solution": 10,
+                "repeated_suggestion": 1,
                 "invalid_response_notebook": {
-                    "num": 1,
-                    "turn": 4
+                    "num": 0,
+                    "turn": 0
                 },
                 "invalid_card": {
                     "num": 0,
@@ -5437,15 +5437,15 @@
             },
             "Player 2": {
                 "player_pos": 2,
-                "model": "gemma3:4b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
-                "suggestions": 10,
-                "info_gain": 4.666666666666666,
+                "suggestions": 4,
+                "info_gain": 3.333333333333333,
                 "perfect_knowledge": 0,
-                "found_solution": 0,
-                "repeated_suggestion": 8,
+                "found_solution": 2,
+                "repeated_suggestion": 0,
                 "invalid_response_notebook": {
                     "num": 0,
                     "turn": 0
@@ -5467,18 +5467,18 @@
         "game_2": {
             "Player 1": {
                 "player_pos": 1,
-                "model": "qwen/qwen3-32b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
-                "suggestions": 1,
-                "info_gain": 1.0,
+                "suggestions": 5,
+                "info_gain": 4.0,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
                 "repeated_suggestion": 0,
                 "invalid_response_notebook": {
-                    "num": 1,
-                    "turn": 1
+                    "num": 0,
+                    "turn": 0
                 },
                 "invalid_card": {
                     "num": 0,
@@ -5495,15 +5495,15 @@
             },
             "Player 2": {
                 "player_pos": 2,
-                "model": "gemma3:4b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
-                "suggestions": 10,
-                "info_gain": 4.333333333333333,
+                "suggestions": 6,
+                "info_gain": 5.333333333333334,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
-                "repeated_suggestion": 5,
+                "repeated_suggestion": 1,
                 "invalid_response_notebook": {
                     "num": 0,
                     "turn": 0
@@ -5525,18 +5525,18 @@
         "game_3": {
             "Player 1": {
                 "player_pos": 1,
-                "model": "qwen/qwen3-32b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
-                "risk": 0,
-                "suggestions": 1,
-                "info_gain": 1.0,
+                "risk": 0.2222222222222222,
+                "suggestions": 5,
+                "info_gain": 5.0,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
                 "repeated_suggestion": 0,
                 "invalid_response_notebook": {
-                    "num": 1,
-                    "turn": 1
+                    "num": 0,
+                    "turn": 0
                 },
                 "invalid_card": {
                     "num": 0,
@@ -5547,21 +5547,21 @@
                     "turn": 0
                 },
                 "wrong_accusation": {
-                    "num": 0,
-                    "turn": 0
+                    "num": 1,
+                    "turn": 6
                 }
             },
             "Player 2": {
                 "player_pos": 2,
-                "model": "gemma3:4b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
-                "suggestions": 10,
-                "info_gain": 1.6666666666666665,
+                "suggestions": 2,
+                "info_gain": 2.0,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
-                "repeated_suggestion": 8,
+                "repeated_suggestion": 0,
                 "invalid_response_notebook": {
                     "num": 0,
                     "turn": 0
@@ -5583,18 +5583,18 @@
         "game_4": {
             "Player 1": {
                 "player_pos": 1,
-                "model": "qwen/qwen3-32b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
-                "suggestions": 1,
-                "info_gain": 1.0,
+                "suggestions": 9,
+                "info_gain": 8.0,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
                 "repeated_suggestion": 0,
                 "invalid_response_notebook": {
-                    "num": 1,
-                    "turn": 1
+                    "num": 0,
+                    "turn": 0
                 },
                 "invalid_card": {
                     "num": 0,
@@ -5611,15 +5611,15 @@
             },
             "Player 2": {
                 "player_pos": 2,
-                "model": "gemma3:4b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
-                "risk": 0,
-                "suggestions": 10,
-                "info_gain": 7.000000000000001,
+                "risk": 0.05555555555555558,
+                "suggestions": 9,
+                "info_gain": 7.333333333333335,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
-                "repeated_suggestion": 9,
+                "repeated_suggestion": 0,
                 "invalid_response_notebook": {
                     "num": 0,
                     "turn": 0
@@ -5633,26 +5633,26 @@
                     "turn": 0
                 },
                 "wrong_accusation": {
-                    "num": 0,
-                    "turn": 0
+                    "num": 1,
+                    "turn": 10
                 }
             }
         },
         "game_5": {
             "Player 1": {
                 "player_pos": 1,
-                "model": "qwen/qwen3-32b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
-                "suggestions": 1,
-                "info_gain": 1.0,
+                "suggestions": 10,
+                "info_gain": 8.000000000000002,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
-                "repeated_suggestion": 0,
+                "repeated_suggestion": 1,
                 "invalid_response_notebook": {
-                    "num": 1,
-                    "turn": 1
+                    "num": 0,
+                    "turn": 0
                 },
                 "invalid_card": {
                     "num": 0,
@@ -5669,15 +5669,15 @@
             },
             "Player 2": {
                 "player_pos": 2,
-                "model": "gemma3:4b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
-                "suggestions": 10,
-                "info_gain": 7.000000000000001,
+                "suggestions": 8,
+                "info_gain": 7.333333333333334,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
-                "repeated_suggestion": 9,
+                "repeated_suggestion": 1,
                 "invalid_response_notebook": {
                     "num": 0,
                     "turn": 0
@@ -5699,15 +5699,15 @@
         "game_6": {
             "Player 1": {
                 "player_pos": 1,
-                "model": "gemma3:4b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
-                "suggestions": 10,
-                "info_gain": 9.0,
+                "suggestions": 7,
+                "info_gain": 7.0,
                 "perfect_knowledge": 0,
-                "found_solution": 10,
-                "repeated_suggestion": 7,
+                "found_solution": 0,
+                "repeated_suggestion": 0,
                 "invalid_response_notebook": {
                     "num": 0,
                     "turn": 0
@@ -5727,12 +5727,12 @@
             },
             "Player 2": {
                 "player_pos": 2,
-                "model": "qwen/qwen3-32b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
-                "risk": 0.5,
-                "suggestions": 0,
-                "info_gain": 0,
+                "risk": 0,
+                "suggestions": 4,
+                "info_gain": 2.6666666666666665,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
                 "repeated_suggestion": 0,
@@ -5749,20 +5749,20 @@
                     "turn": 0
                 },
                 "wrong_accusation": {
-                    "num": 1,
-                    "turn": 1
+                    "num": 0,
+                    "turn": 0
                 }
             }
         },
         "game_7": {
             "Player 1": {
                 "player_pos": 1,
-                "model": "gemma3:4b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
-                "risk": 0.38888888888888884,
+                "risk": 0.2777777777777778,
                 "suggestions": 4,
-                "info_gain": 2.6666666666666665,
+                "info_gain": 4.0,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
                 "repeated_suggestion": 0,
@@ -5785,18 +5785,18 @@
             },
             "Player 2": {
                 "player_pos": 2,
-                "model": "qwen/qwen3-32b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
-                "suggestions": 0,
-                "info_gain": 0,
+                "suggestions": 7,
+                "info_gain": 6.000000000000001,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
-                "repeated_suggestion": 0,
+                "repeated_suggestion": 1,
                 "invalid_response_notebook": {
-                    "num": 1,
-                    "turn": 1
+                    "num": 0,
+                    "turn": 0
                 },
                 "invalid_card": {
                     "num": 0,
@@ -5815,18 +5815,18 @@
         "game_8": {
             "Player 1": {
                 "player_pos": 1,
-                "model": "qwen/qwen3-32b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
-                "suggestions": 1,
-                "info_gain": 1.0,
+                "suggestions": 5,
+                "info_gain": 4.333333333333333,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
                 "repeated_suggestion": 0,
                 "invalid_response_notebook": {
-                    "num": 1,
-                    "turn": 1
+                    "num": 0,
+                    "turn": 0
                 },
                 "invalid_card": {
                     "num": 0,
@@ -5843,15 +5843,15 @@
             },
             "Player 2": {
                 "player_pos": 2,
-                "model": "gemma3:4b",
+                "model": "ministral-3:14b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
-                "suggestions": 10,
-                "info_gain": 4.999999999999999,
+                "suggestions": 2,
+                "info_gain": 2.0,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
-                "repeated_suggestion": 8,
+                "repeated_suggestion": 0,
                 "invalid_response_notebook": {
                     "num": 0,
                     "turn": 0
@@ -5873,15 +5873,86 @@
         "game_9": {
             "Player 1": {
                 "player_pos": 1,
-                "model": "gemma3:4b",
+                "model": "ministral-3:14b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0.2222222222222222,
+                "suggestions": 7,
+                "info_gain": 6.000000000000001,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 1,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 1,
+                    "turn": 8
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "ministral-3:14b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0.2777777777777778,
+                "suggestions": 4,
+                "info_gain": 4.0,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 0,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 1,
+                    "turn": 5
+                }
+            }
+        }
+    },
+    "nemotron-3-nano:4b.jsonl": {
+        "games": 10,
+        "wins": 3,
+        "losses": 7,
+        "max_turns_reached": {
+            "num": 6,
+            "turn": 66
+        },
+        "all_players_lost": {
+            "num": 1,
+            "turn": 8
+        },
+        "game_0": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "nemotron-3-nano:4b",
                 "wins": 0,
                 "win_turn": 0,
                 "risk": 0,
                 "suggestions": 10,
-                "info_gain": 4.999999999999999,
+                "info_gain": 8.333333333333332,
                 "perfect_knowledge": 0,
-                "found_solution": 0,
-                "repeated_suggestion": 6,
+                "found_solution": 10,
+                "repeated_suggestion": 4,
                 "invalid_response_notebook": {
                     "num": 0,
                     "turn": 0
@@ -5901,12 +5972,128 @@
             },
             "Player 2": {
                 "player_pos": 2,
-                "model": "qwen/qwen3-32b",
+                "model": "nemotron-3-nano:4b",
                 "wins": 0,
                 "win_turn": 0,
-                "risk": 0.5,
-                "suggestions": 0,
-                "info_gain": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 8.000000000000002,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 0,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_1": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 8.0,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 3,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 9.333333333333332,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 2,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_2": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 4,
+                "info_gain": 4.0,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 0,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0.2222222222222222,
+                "suggestions": 6,
+                "info_gain": 5.666666666666667,
                 "perfect_knowledge": 0,
                 "found_solution": 0,
                 "repeated_suggestion": 0,
@@ -5924,7 +6111,1006 @@
                 },
                 "wrong_accusation": {
                     "num": 1,
-                    "turn": 1
+                    "turn": 7
+                }
+            }
+        },
+        "game_3": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 9,
+                "info_gain": 8.0,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 3,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "nemotron-3-nano:4b",
+                "wins": 1,
+                "win_turn": 9,
+                "risk": 0.2222222222222222,
+                "suggestions": 8,
+                "info_gain": 7.333333333333334,
+                "perfect_knowledge": 0,
+                "found_solution": 8,
+                "repeated_suggestion": 1,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_4": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 8.333333333333332,
+                "perfect_knowledge": 0,
+                "found_solution": 6,
+                "repeated_suggestion": 1,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 8.666666666666666,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 2,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_5": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0.33333333333333337,
+                "suggestions": 6,
+                "info_gain": 5.0,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 0,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 1,
+                    "turn": 7
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 10.0,
+                "perfect_knowledge": 0,
+                "found_solution": 10,
+                "repeated_suggestion": 1,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_6": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "nemotron-3-nano:4b",
+                "wins": 1,
+                "win_turn": 2,
+                "risk": 0.4444444444444444,
+                "suggestions": 1,
+                "info_gain": 1.0,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 0,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 1,
+                "info_gain": 1.0,
+                "perfect_knowledge": 0,
+                "found_solution": 1,
+                "repeated_suggestion": 0,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_7": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 9.333333333333334,
+                "perfect_knowledge": 0,
+                "found_solution": 10,
+                "repeated_suggestion": 1,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 4,
+                "info_gain": 3.6666666666666665,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 0,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_8": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 8,
+                "info_gain": 7.666666666666667,
+                "perfect_knowledge": 0,
+                "found_solution": 8,
+                "repeated_suggestion": 1,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "nemotron-3-nano:4b",
+                "wins": 1,
+                "win_turn": 8,
+                "risk": 0.2222222222222222,
+                "suggestions": 7,
+                "info_gain": 6.666666666666667,
+                "perfect_knowledge": 0,
+                "found_solution": 7,
+                "repeated_suggestion": 0,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_9": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 8.666666666666668,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 1,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "nemotron-3-nano:4b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 8,
+                "info_gain": 6.666666666666666,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 1,
+                "invalid_response_notebook": {
+                    "num": 1,
+                    "turn": 8
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        }
+    },
+    "qwen2.5:7b.jsonl": {
+        "games": 10,
+        "wins": 0,
+        "losses": 10,
+        "max_turns_reached": {
+            "num": 9,
+            "turn": 99
+        },
+        "all_players_lost": {
+            "num": 1,
+            "turn": 9
+        },
+        "game_0": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 1.3333333333333333,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 2,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 7.666666666666667,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 1,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_1": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 9,
+                "info_gain": 6.333333333333334,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 7,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 3.9999999999999996,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 6,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_2": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 6.333333333333333,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 4,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 6.333333333333332,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 2,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_3": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 6.666666666666667,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 5,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 6.666666666666667,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 2,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_4": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 5.333333333333332,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 4,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 5.0,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 1,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_5": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 5.0,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 3,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 7.666666666666668,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 6,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_6": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 0.0,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 5,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 6.666666666666666,
+                "perfect_knowledge": 0,
+                "found_solution": 10,
+                "repeated_suggestion": 2,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_7": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0.2222222222222222,
+                "suggestions": 7,
+                "info_gain": 4.666666666666666,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 0,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 1,
+                    "turn": 8
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 3,
+                "info_gain": 2.3333333333333335,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 0,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_8": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 4.999999999999999,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 2,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 4.333333333333333,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 7,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            }
+        },
+        "game_9": {
+            "Player 1": {
+                "player_pos": 1,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 8.0,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 5,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
+                }
+            },
+            "Player 2": {
+                "player_pos": 2,
+                "model": "qwen2.5:7b",
+                "wins": 0,
+                "win_turn": 0,
+                "risk": 0,
+                "suggestions": 10,
+                "info_gain": 8.0,
+                "perfect_knowledge": 0,
+                "found_solution": 0,
+                "repeated_suggestion": 3,
+                "invalid_response_notebook": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_card": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "invalid_response_action": {
+                    "num": 0,
+                    "turn": 0
+                },
+                "wrong_accusation": {
+                    "num": 0,
+                    "turn": 0
                 }
             }
         }

@@ -175,17 +175,28 @@ def evaluate(summary):
     return results
 
 
-all_results = {}
+def generate_evaluation_summary():
+    results_dir = Path("results")
+    if not results_dir.exists():
+        raise FileNotFoundError(
+            f"Results directory not found: {results_dir.resolve()}"
+        )
 
-for file in Path("results").glob("*.json"):
+    all_results = {}
+    for file in results_dir.glob("*.json"):
+        with open(file, encoding="utf-8") as f:
+            summary = json.load(f)
+        all_results.update(evaluate(summary))
 
-    with open(file, encoding="utf-8") as f:
-        summary = json.load(f)
+    output_path = Path(__file__).resolve().parent / "evaluation_summary.json"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(all_results, f, indent=2)
 
-    all_results.update(evaluate(summary))
+    print(json.dumps(all_results, indent=2))
+    print(f"Saved evaluation metrics to {output_path}")
+    return all_results
 
 
-with open("evaluation/evaluation_summary.json", "w", encoding="utf-8") as f:
-    json.dump(all_results, f, indent=2)
-
-print(json.dumps(all_results, indent=2))
+if __name__ == "__main__":
+    generate_evaluation_summary()

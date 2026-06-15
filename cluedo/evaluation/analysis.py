@@ -21,7 +21,7 @@ class CluedoAnalyzer:
         return data
     
     def _load_instances(self):
-        temp = json.load(open("instances/instances.json", "r"))
+        temp = json.load(open("cluedo/instances/instances.json", "r"))
         inst_games = temp['games']
         return inst_games
 
